@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sun.management.OperatingSystemMXBean;
+import com.yhert.project.common.beans.Model;
 
 /**
  * 系统相关数据获取
@@ -14,8 +15,27 @@ import com.sun.management.OperatingSystemMXBean;
  * @author Ricardo Li 2017年1月2日 上午10:53:45
  *
  */
-@SuppressWarnings("restriction")
-public class SystemUtils {
+public class SystemUtils extends org.apache.commons.lang3.SystemUtils {
+	/**
+	 * 获得进程名称
+	 * 
+	 * @return 进程名称
+	 */
+	public static String getProcessName() {
+		RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
+		return runtimeMXBean.getName();
+	}
+
+	/**
+	 * 获得进程号
+	 * 
+	 * @return 进程号
+	 */
+	public static int getProcessId() {
+		String processName = getProcessName();
+		return Integer.valueOf(processName.split("@")[0]).intValue();
+	}
+
 	/**
 	 * 获得系统当前状态信息（CPU，内存，线程，等）
 	 * 
@@ -69,7 +89,11 @@ public class SystemUtils {
 		return state;
 	}
 
-	public static class SystemState {
+	public static class SystemState extends Model {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		private long freeMemory; // 空闲内存
 		private long usedMemory; // 使用中的内存
 		private long totalMemory; // 总内存
@@ -202,11 +226,6 @@ public class SystemUtils {
 			this.disks = disks;
 		}
 
-		@Override
-		public String toString() {
-			return "SystemState [freeMemory=" + freeMemory + ", usedMemory=" + usedMemory + ", totalMemory=" + totalMemory + ", maxMemory=" + maxMemory + ", freePhysicalMemory=" + freePhysicalMemory + ", totalPhysicalMemory=" + totalPhysicalMemory + ", usedPhysicalMemory=" + usedPhysicalMemory + ", freeSwapSpaceSize=" + freeSwapSpaceSize + ", totalSwapSpaceSize=" + totalSwapSpaceSize + ", usedSwapSpaceSize=" + usedSwapSpaceSize + ", virtualMemorySize=" + virtualMemorySize + ", threadSize=" + threadSize + ", runningTime=" + runningTime + ", disks=" + disks + "]";
-		}
-
 	}
 
 	/**
@@ -215,7 +234,11 @@ public class SystemUtils {
 	 * @author Ricardo Li 2017年1月2日 下午12:45:31
 	 *
 	 */
-	public static class Disk {
+	public static class Disk extends Model {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		private String name; // 磁盘信息
 		private long free; // 空闲磁盘空间
 		private long total; // 总磁盘空间
@@ -244,14 +267,5 @@ public class SystemUtils {
 			this.total = total;
 		}
 
-		@Override
-		public String toString() {
-			return "DiskNews [name=" + name + ", free=" + free + ", total=" + total + "]";
-		}
 	}
-
-	/*
-	 * public static void main(String[] args) throws Exception {
-	 * System.out.println(getSystemState()); }
-	 */
 }

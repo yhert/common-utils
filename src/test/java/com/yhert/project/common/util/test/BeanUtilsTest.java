@@ -1,8 +1,11 @@
 package com.yhert.project.common.util.test;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 
@@ -56,7 +59,7 @@ public class BeanUtilsTest {
 		System.out.println(baseUser);
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes" })
 	@Test
 	public void switchParamTest() {
 		Param param = Param.getParam().putParam("username", "admin").putParam("createTime", "2017-06-08");
@@ -83,5 +86,16 @@ public class BeanUtilsTest {
 	@Test
 	public void testTypeSwitch() {
 		System.out.println(DateUtils.parseDate(new Date().toString()));
+	}
+
+	public static enum TestEnum {
+		NEW, APP
+	}
+
+	@Test
+	public void testTypeSwitch2() {
+		assertTrue("类型装换器将String转换为枚举时失败", TestEnum.APP.equals(BeanUtils.switchType("APP", TestEnum.class)));
+		assertTrue("类型装换器将,分割的String数据转换为int[]时出错", Arrays.deepEquals(new Integer[] { 12, 23 }, BeanUtils.switchType("12,23", Integer[].class)));
+		assertTrue("类型装换器将String数组数据转换为int[]时出错", Arrays.deepEquals(new Integer[] { 12, 23 }, BeanUtils.switchType(new String[] { "12", "23" }, Integer[].class)));
 	}
 }

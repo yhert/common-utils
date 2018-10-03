@@ -2,6 +2,7 @@ package com.yhert.project.common.util.net.ipaddress;
 
 import java.io.Serializable;
 
+import com.yhert.project.common.beans.Model;
 import com.yhert.project.common.util.StringUtils;
 
 /**
@@ -10,7 +11,7 @@ import com.yhert.project.common.util.StringUtils;
  * @author Ricardo Li 2016年7月30日 下午12:58:14
  *
  */
-public class SystemIpAddress implements Serializable {
+public class SystemIpAddress extends Model implements Serializable {
 	/**
 	 * 
 	 */
@@ -196,6 +197,15 @@ public class SystemIpAddress implements Serializable {
 	}
 
 	/**
+	 * 响应拼接好的地址
+	 * 
+	 * @return 结果
+	 */
+	public String toAddress() {
+		return getAddress(this);
+	}
+
+	/**
 	 * 获得拼接后的地址信息
 	 * 
 	 * @param ipAddress
@@ -215,111 +225,6 @@ public class SystemIpAddress implements Serializable {
 		if (!StringUtils.isEmpty(ipAddress.getCounty()))
 			sb.append(ipAddress.getCounty());
 		return sb.toString();
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((area == null) ? 0 : area.hashCode());
-		result = prime * result + ((areaId == null) ? 0 : areaId.hashCode());
-		result = prime * result + ((city == null) ? 0 : city.hashCode());
-		result = prime * result + ((cityId == null) ? 0 : cityId.hashCode());
-		result = prime * result + ((country == null) ? 0 : country.hashCode());
-		result = prime * result + ((countryId == null) ? 0 : countryId.hashCode());
-		result = prime * result + ((county == null) ? 0 : county.hashCode());
-		result = prime * result + ((countyId == null) ? 0 : countyId.hashCode());
-		result = prime * result + ((ip == null) ? 0 : ip.hashCode());
-		result = prime * result + ((isp == null) ? 0 : isp.hashCode());
-		result = prime * result + ((ispId == null) ? 0 : ispId.hashCode());
-		result = prime * result + ((region == null) ? 0 : region.hashCode());
-		result = prime * result + ((regionId == null) ? 0 : regionId.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SystemIpAddress other = (SystemIpAddress) obj;
-		if (area == null) {
-			if (other.area != null)
-				return false;
-		} else if (!area.equals(other.area))
-			return false;
-		if (areaId == null) {
-			if (other.areaId != null)
-				return false;
-		} else if (!areaId.equals(other.areaId))
-			return false;
-		if (city == null) {
-			if (other.city != null)
-				return false;
-		} else if (!city.equals(other.city))
-			return false;
-		if (cityId == null) {
-			if (other.cityId != null)
-				return false;
-		} else if (!cityId.equals(other.cityId))
-			return false;
-		if (country == null) {
-			if (other.country != null)
-				return false;
-		} else if (!country.equals(other.country))
-			return false;
-		if (countryId == null) {
-			if (other.countryId != null)
-				return false;
-		} else if (!countryId.equals(other.countryId))
-			return false;
-		if (county == null) {
-			if (other.county != null)
-				return false;
-		} else if (!county.equals(other.county))
-			return false;
-		if (countyId == null) {
-			if (other.countyId != null)
-				return false;
-		} else if (!countyId.equals(other.countyId))
-			return false;
-		if (ip == null) {
-			if (other.ip != null)
-				return false;
-		} else if (!ip.equals(other.ip))
-			return false;
-		if (isp == null) {
-			if (other.isp != null)
-				return false;
-		} else if (!isp.equals(other.isp))
-			return false;
-		if (ispId == null) {
-			if (other.ispId != null)
-				return false;
-		} else if (!ispId.equals(other.ispId))
-			return false;
-		if (region == null) {
-			if (other.region != null)
-				return false;
-		} else if (!region.equals(other.region))
-			return false;
-		if (regionId == null) {
-			if (other.regionId != null)
-				return false;
-		} else if (!regionId.equals(other.regionId))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "SystemIpAddress [ip=" + ip + ", country=" + country + ", countryId=" + countryId + ", area=" + area
-				+ ", areaId=" + areaId + ", region=" + region + ", regionId=" + regionId + ", city=" + city
-				+ ", cityId=" + cityId + ", county=" + county + ", countyId=" + countyId + ", isp=" + isp + ", ispId="
-				+ ispId + "]";
 	}
 
 }

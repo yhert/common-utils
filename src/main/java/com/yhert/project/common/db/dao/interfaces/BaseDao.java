@@ -203,8 +203,14 @@ public class BaseDao<E> implements Dao<E> {
 	}
 
 	@Override
-	public E get(Object pk) {
-		return this.baseDao.get(pk, getTableName(), type);
+	public E get(E e) {
+		return get(obj2Map(e));
+	}
+
+	@Override
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public E get(Map pk) {
+		return (E) this.baseDao.get(pk, getTableName(), type);
 	}
 
 	@SuppressWarnings("unchecked")

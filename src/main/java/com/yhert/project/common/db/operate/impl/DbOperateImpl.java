@@ -121,7 +121,11 @@ public class DbOperateImpl implements DbOperate {
 			connection = this.getConnection();
 			ps = connection.prepareStatement(sql);
 			for (int i = 0; i < args.length; i++) {
-				ps.setObject(i + 1, args[i]);
+				if (args[i] != null && args[i].getClass().isEnum()) {
+					ps.setObject(i + 1, Enum.class.cast(args[i]).name());
+				} else {
+					ps.setObject(i + 1, args[i]);
+				}
 			}
 			rs = ps.executeQuery();
 			return callback.callback(rs);

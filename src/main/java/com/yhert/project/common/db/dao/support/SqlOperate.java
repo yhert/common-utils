@@ -1,7 +1,6 @@
 package com.yhert.project.common.db.dao.support;
 
 import java.util.List;
-import java.util.Set;
 
 import com.yhert.project.common.util.db.Column;
 
@@ -52,12 +51,4 @@ public interface SqlOperate {
 	 */
 	String sqlAddPageLimit(String sql, int start, int limit);
 
-	/**
-	 * 获得表主键
-	 * 
-	 * @param tableName
-	 *            表名称
-	 * @return 主键
-	 */
-	Set<String> getTablePrimaryKey(String tableName);
 }

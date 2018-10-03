@@ -4,25 +4,47 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
+import com.yhert.project.common.beans.Model;
+
 /**
  * 数据表信息
  * 
  * @author Ricardo Li 2017年9月6日 下午4:46:04
  *
  */
-public class Table implements Serializable {
+public class Table extends Model implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * catelog数据
+	 */
 	private String catalog;
+	/**
+	 * 数据库方案
+	 */
 	private String schema;
+	/**
+	 * 数据表名称
+	 */
 	private String tableName;
-	private int type; // 1：基础数据表，2、视图，3、系统表
-	private Date createTime; // 创建时间
-	private String remake; // 说明
-
-	private List<Column> columns; // 字段信息
+	/**
+	 * 1：基础数据表，2、视图，3、系统表
+	 */
+	private int type;
+	/**
+	 * 创建时间
+	 */
+	private Date createTime;
+	/**
+	 * 说明
+	 */
+	private String remake;
+	/**
+	 * 字段信息
+	 */
+	private List<Column> columns;
 
 	public String getCatalog() {
 		return catalog;
@@ -55,8 +77,7 @@ public class Table implements Serializable {
 	/**
 	 * 数据表类型
 	 * 
-	 * @param type
-	 *            1：基础数据表，2、视图，3、系统表
+	 * @param type 1：基础数据表，2、视图，3、系统表
 	 */
 	public void setType(int type) {
 		this.type = type;
@@ -89,11 +110,5 @@ public class Table implements Serializable {
 
 	public void setColumns(List<Column> columns) {
 		this.columns = columns;
-	}
-
-	@Override
-	public String toString() {
-		return "Table [catalog=" + catalog + ", schema=" + schema + ", tableName=" + tableName + ", type=" + type
-				+ ", createTime=" + createTime + ", remake=" + remake + ", columns=" + columns + "]";
 	}
 }

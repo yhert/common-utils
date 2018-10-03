@@ -1,4 +1,6 @@
-package com.yhert.project.common.excp;
+package com.yhert.project.common.excp.app;
+
+import com.yhert.project.common.excp.CommonException;
 
 /**
  * 应用异常

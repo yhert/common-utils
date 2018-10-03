@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.RandomUtils;
 
 import com.yhert.project.common.db.dao.IDao;
@@ -79,17 +78,14 @@ public class SqlUtils {
 	/**
 	 * 合成插入的SQL语句
 	 * 
-	 * @param insertParams
-	 *            对象
-	 * @param tableName
-	 *            表名
-	 * @param sqlOperate
-	 *            SQL操作工具
-	 * @param args
-	 *            参数
+	 * @param insertParams 对象
+	 * @param tableName    表名
+	 * @param sqlOperate   SQL操作工具
+	 * @param args         参数
 	 * @return SQL语句
 	 */
-	public static <E> StringBuilder getInsertSql(List<Map<String, ?>> insertParams, String tableName, SqlOperate sqlOperate, List<Object> args) {
+	public static <E> StringBuilder getInsertSql(List<Map<String, ?>> insertParams, String tableName,
+			SqlOperate sqlOperate, List<Object> args) {
 		if (insertParams == null || insertParams.size() <= 0) {
 			throw new IllegalArgumentException("插入数据不能够为空");
 		}
@@ -149,12 +145,9 @@ public class SqlUtils {
 	/**
 	 * 合成插入的SQL语句
 	 * 
-	 * @param insertParam
-	 *            对象
-	 * @param tableName
-	 *            表名
-	 * @param sqlOperate
-	 *            SQL操作工具
+	 * @param insertParam 对象
+	 * @param tableName   表名
+	 * @param sqlOperate  SQL操作工具
 	 * @return SQL语句
 	 */
 	public static <E> StringBuilder getInsertSql(Map<String, ?> insertParam, String tableName, SqlOperate sqlOperate) {
@@ -201,12 +194,9 @@ public class SqlUtils {
 	/**
 	 * 获得删除的SQL
 	 * 
-	 * @param param
-	 *            条件
-	 * @param tableName
-	 *            表名
-	 * @param sqlOperate
-	 *            SQL操作器
+	 * @param param      条件
+	 * @param tableName  表名
+	 * @param sqlOperate SQL操作器
 	 * @return SQL语句
 	 */
 	public static StringBuilder getDeleteSql(Map<String, ?> param, String tableName, SqlOperate sqlOperate) {
@@ -228,7 +218,9 @@ public class SqlUtils {
 				} else if (param.containsKey(cname)) {
 					pName = cname;
 				}
-				if (pName != null) {
+				if (pName == null) {
+					throw new DaoOperateException("删除数据必须对应所有数据库主键，批量删除请执行使用SQL语句进行操作");
+				} else {
 					if (first) {
 						first = false;
 					} else {
@@ -247,20 +239,16 @@ public class SqlUtils {
 	/**
 	 * 获得更新的SQL
 	 * 
-	 * @param updateColumn
-	 *            需要更新的字段
-	 * @param whereParam
-	 *            判断条件
-	 * @param tableName
-	 *            表名
-	 * @param sqlOperate
-	 *            sql器
-	 * @param paramR
-	 *            参数(返回SQL执行所需参数)
+	 * @param updateColumn 需要更新的字段
+	 * @param whereParam   判断条件
+	 * @param tableName    表名
+	 * @param sqlOperate   sql器
+	 * @param paramR       参数(返回SQL执行所需参数)
 	 * @return SQL语句
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static StringBuilder getUpdateSql(Map<String, ?> updateColumn, Map<?, ?> whereParam, String tableName, SqlOperate sqlOperate, Map paramR) {
+	public static StringBuilder getUpdateSql(Map<String, ?> updateColumn, Map<?, ?> whereParam, String tableName,
+			SqlOperate sqlOperate, Map paramR) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("update ");
 		sql.append(sqlOperate.getTableName(tableName));
@@ -321,12 +309,9 @@ public class SqlUtils {
 	/**
 	 * 获得查询SQL
 	 * 
-	 * @param whereParam
-	 *            条件
-	 * @param tableName
-	 *            表名称
-	 * @param sqlOperate
-	 *            SQL操作器
+	 * @param whereParam 条件
+	 * @param tableName  表名称
+	 * @param sqlOperate SQL操作器
 	 * @return SQL语句
 	 */
 	@SuppressWarnings({ "rawtypes" })
@@ -337,18 +322,15 @@ public class SqlUtils {
 	/**
 	 * 获得查询SQL
 	 * 
-	 * @param whereParam
-	 *            条件
-	 * @param tableName
-	 *            表名称
-	 * @param sqlOperate
-	 *            SQL操作器
-	 * @param columns
-	 *            字段信息
+	 * @param whereParam 条件
+	 * @param tableName  表名称
+	 * @param sqlOperate SQL操作器
+	 * @param columns    字段信息
 	 * @return SQL语句
 	 */
 	@SuppressWarnings({ "rawtypes" })
-	public static StringBuilder getQuerySql(Map whereParam, String tableName, SqlOperate sqlOperate, List<Column> columns) {
+	public static StringBuilder getQuerySql(Map whereParam, String tableName, SqlOperate sqlOperate,
+			List<Column> columns) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("select * from ");
 		sql.append(tableName);
@@ -364,14 +346,9 @@ public class SqlUtils {
 	/**
 	 * 获得查询SQL
 	 * 
-	 * @param whereParam
-	 *            条件
-	 * @param tableName
-	 *            表名称
-	 * @param sqlOperate
-	 *            SQL操作器
-	 * @param columns
-	 *            字段信息
+	 * @param whereParam 条件
+	 * @param sqlOperate SQL操作器
+	 * @param columns    字段信息
 	 * @return SQL语句
 	 */
 	@SuppressWarnings({ "rawtypes" })
@@ -390,7 +367,8 @@ public class SqlUtils {
 	}
 
 	@SuppressWarnings({ "rawtypes" })
-	private static boolean getQueryColumnSql(Map whereParam, SqlOperate sqlOperate, StringBuilder sql, Set<String> propertis, boolean first, Object keyObj) {
+	private static boolean getQueryColumnSql(Map whereParam, SqlOperate sqlOperate, StringBuilder sql,
+			Set<String> propertis, boolean first, Object keyObj) {
 		if (keyObj != null) {
 			String key = keyObj.toString();
 			String exp = "=";
@@ -436,13 +414,15 @@ public class SqlUtils {
 					column = column.substring(SQL_P_NOT_IN.length());
 				}
 			}
-			if (CommonFunUtils.isNe(column) || CommonFunUtils.isNe(exp) || CommonFunUtils.isNe(whereParam.get(keyObj))) {
+			if (CommonFunUtils.isNe(column) || CommonFunUtils.isNe(exp)
+					|| CommonFunUtils.isNe(whereParam.get(keyObj))) {
 				return first;
 			}
 			String uname = StringUtils.underscoreName(column);
 			String cname = StringUtils.camelName(column);
 			if (propertis.contains(cname) || propertis.contains(uname)) {
-				StringBuilder nsql = getQueryColumnValueSql(whereParam, key, sqlOperate.getColumnName(uname), exp, operate);
+				StringBuilder nsql = getQueryColumnValueSql(whereParam, key, sqlOperate.getColumnName(uname), exp,
+						operate);
 
 				// 追加到SQL上
 				if (nsql.length() > 0) {
@@ -460,7 +440,8 @@ public class SqlUtils {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private static StringBuilder getQueryColumnValueSql(Map whereParam, String key, String columnName, String exp, String operate) {
+	private static StringBuilder getQueryColumnValueSql(Map whereParam, String key, String columnName, String exp,
+			String operate) {
 		StringBuilder nsql = new StringBuilder();
 		if (SQL_P_IN.equals(operate) || SQL_P_NOT_IN.equals(operate)) {
 			// 分别处理in操作
@@ -481,7 +462,8 @@ public class SqlUtils {
 							} else {
 								nsql.append(", ");
 							}
-							String keyStr = StringUtils.join(key, "_", exp, "_", String.valueOf(RandomUtils.nextInt() % 1000));
+							String keyStr = StringUtils.join(key, "_", exp, "_",
+									String.valueOf(RandomUtils.nextInt() % 1000));
 							nsql.append(" :");
 							nsql.append(keyStr);
 							whereParam.put(keyStr, obj);
@@ -506,7 +488,8 @@ public class SqlUtils {
 							} else {
 								nsql.append(", ");
 							}
-							String keyStr = StringUtils.join(key, "_", exp, "_", String.valueOf(RandomUtils.nextInt() % 1000));
+							String keyStr = StringUtils.join(key, "_", exp, "_",
+									String.valueOf(RandomUtils.nextInt() % 1000));
 							nsql.append(" :");
 							nsql.append(keyStr);
 							whereParam.put(keyStr, obj);
@@ -538,12 +521,9 @@ public class SqlUtils {
 	/**
 	 * 替换sql语句中的占位符数据
 	 * 
-	 * @param sql
-	 *            SQL
-	 * @param param
-	 *            参数
-	 * @param args
-	 *            队列
+	 * @param sql   SQL
+	 * @param param 参数
+	 * @param args  队列
 	 * @return 结果
 	 */
 	public static String sqlSwitch(String sql, Map<?, ?> param, List<Object> args) {
@@ -577,34 +557,47 @@ public class SqlUtils {
 	/**
 	 * 设置SQL排序
 	 * 
-	 * @param whereParam
-	 *            参数
-	 * @param sql
-	 *            SQL
+	 * @param whereParam 参数
+	 * @param sql        SQL
 	 */
 	public static void setSortSql(Map<?, ?> whereParam, StringBuilder sql, SqlOperate sqlOperate) {
-		String quotes = "`";
-		Object sortColumnObj = whereParam.get(IDao.SORT_COLUMN);
-		if (ObjectUtils.allNotNull(sortColumnObj)) {
-			if (!StringUtils.isEmpty(sortColumnObj.toString())) {
-				Object sortTypeObj = whereParam.get(IDao.SORT_TTYPE);
-				String sortType = null;
-				if (ObjectUtils.allNotNull(sortTypeObj)) {
-					sortType = sortTypeObj.toString().toLowerCase();
-					if (!Dao.VALUE_SORT_TTYPE_ASC.equals(sortType) && !Dao.VALUE_SORT_TTYPE_DESC.equals(sortType)) {
-						sortType = Dao.VALUE_SORT_TTYPE_ASC;
+		Object sortColumnObj = whereParam.get(IDao.SORT);
+		if (!CommonFunUtils.isNe(sortColumnObj)) {
+			String sort = StringUtils.trim(sortColumnObj.toString());
+			String[] sorts = sort.split(",");
+			boolean first = true;
+			for (String s : sorts) {
+				s = StringUtils.trim(s.toLowerCase());
+				String[] sts = s.split(" ");
+				if (sts.length > 0) {
+					String column = StringUtils.trim(sts[0]);
+					if (!StringUtils.isEmpty(column)) {
+						String type = null;
+						if (sts.length > 1) {
+							type = StringUtils.trim(sts[1]);
+							if (StringUtils.isEmpty(type)) {
+								type = Dao.VALUE_SORT_TTYPE_ASC;
+							} else {
+								if (!Dao.VALUE_SORT_TTYPE_ASC.equals(type) && !Dao.VALUE_SORT_TTYPE_DESC.equals(type)) {
+									throw new DaoOperateException(
+											"合成SQL语句“" + sql + "”时，排序方式“" + type + "”无法识别，请使用[asc|desc]");
+								}
+							}
+						} else {
+							type = Dao.VALUE_SORT_TTYPE_ASC;
+						}
+						if (first) {
+							sql.append(" order by ");
+							first = false;
+						} else {
+							sql.append(", ");
+						}
+						sql.append(sqlOperate.getColumnName(column));
+						sql.append(" ");
+						sql.append(sort);
+						sql.append(" ");
 					}
-				} else {
-					sortType = Dao.VALUE_SORT_TTYPE_ASC;
 				}
-
-				sql.append(" order by ");
-				sql.append(quotes);
-				sql.append(StringUtils.underscoreName(sortColumnObj.toString()));
-				sql.append(quotes);
-				sql.append(" ");
-				sql.append(sortType);
-				sql.append(" ");
 			}
 		}
 	}

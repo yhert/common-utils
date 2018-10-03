@@ -33,17 +33,34 @@ public class JdbcTemplateDbOperate implements DbOperate {
 
 	@Override
 	public int exeucte(String sql, Object[] args) {
+		filterArgs(args);
 		return this.jdbcTemplate.update(sql, args);
+	}
+
+	/**
+	 * 过滤参数
+	 * 
+	 * @param args
+	 *            参数
+	 */
+	private void filterArgs(Object[] args) {
+		for (int i = 0; i < args.length; i++) {
+			if (args[i] != null && args[i].getClass().isEnum()) {
+				args[i] = Enum.class.cast(args[i]).name();
+			}
+		}
 	}
 
 	@Override
 	public <T> T queryForObject(String sql, Object[] args, Class<T> type) {
+		filterArgs(args);
 		return this.jdbcTemplate.queryForObject(sql, args, type);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public <T> List<T> queryList(String sql, Object[] args, Class<T> type) {
+		filterArgs(args);
 		if (Map.class.isAssignableFrom(type)) {
 			// if (type.equals(Map.class)) {
 			// throw new DaoOperateException("为明确定义");
@@ -57,6 +74,7 @@ public class JdbcTemplateDbOperate implements DbOperate {
 
 	@Override
 	public <T> T query(String sql, Object[] args, final ResultSetCallback<T> callback) {
+		filterArgs(args);
 		return this.jdbcTemplate.query(sql, args, new ResultSetExtractor<T>() {
 
 			@Override

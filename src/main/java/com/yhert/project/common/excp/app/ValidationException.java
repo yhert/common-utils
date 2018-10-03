@@ -1,4 +1,4 @@
-package com.yhert.project.common.excp;
+package com.yhert.project.common.excp.app;
 
 /**
  * 效验异常

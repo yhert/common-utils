@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.sql.DataSource;
 
@@ -21,6 +21,7 @@ import com.yhert.project.common.db.dao.util.SqlUtils;
 import com.yhert.project.common.db.operate.ConnectionCallBack;
 import com.yhert.project.common.db.operate.DbOperate;
 import com.yhert.project.common.db.support.ResultSetCallback;
+import com.yhert.project.common.excp.dao.DaoHasMoreThenOneResultException;
 import com.yhert.project.common.util.StringUtils;
 import com.yhert.project.common.util.db.Column;
 
@@ -432,10 +433,14 @@ public class IDaoImpl implements IDao {
 	 */
 	@Override
 	public <T> T queryOne(String sql, Map<String, ?> param, Class<T> returnType) {
-		String qSql = getSqlOperate().sqlAddPageLimit(sql, 0, 1);
+		String qSql = getSqlOperate().sqlAddPageLimit(sql, 0, 2);
 		List<T> datas = queryList(qSql, param, returnType);
 		if (datas.size() > 0) {
-			return datas.get(0);
+			if (datas.size() > 1) {
+				throw new DaoHasMoreThenOneResultException("本应该最多一条记录，但查询到多条记录结果");
+			} else {
+				return datas.get(0);
+			}
 		} else {
 			return null;
 		}
@@ -444,8 +449,8 @@ public class IDaoImpl implements IDao {
 	/**
 	 * 通过主键查询数据
 	 * 
-	 * @param pk
-	 *            主键
+	 * @param param
+	 *            主键字段
 	 * @param tableName
 	 *            表名称
 	 * @param returnType
@@ -453,14 +458,16 @@ public class IDaoImpl implements IDao {
 	 * @return 结果
 	 */
 	@Override
-	public <T> T get(Object pk, String tableName, Class<T> returnType) {
-		Set<String> pkSet = this.getSqlOperate().getTablePrimaryKey(tableName);
-		if (pkSet.size() > 1) {
-			throw new IllegalArgumentException("通过主键查询只能适用于只有一个主键的情况，" + getTableName(tableName) + "具有" + pkSet.size() + "个主键");
+	public <T> T get(Map<String, ?> param, String tableName, Class<T> returnType) {
+		List<Column> columns = this.getSqlOperate().getTables(tableName);
+		if (columns == null || columns.size() == 0) {
+			throw new IllegalArgumentException("通过主键查询数据时，" + getTableName(tableName) + "未找到主键信息，确保表设计无误");
 		}
-		Param param = Param.getParam();
-		param.put(pkSet.toArray(new String[1])[0], pk);
-		return queryOne(param, tableName, returnType);
+		columns = columns.stream().filter(Column::isPk).collect(Collectors.toList());
+		if (columns == null || columns.size() == 0) {
+			throw new IllegalArgumentException("通过主键查询数据时，" + getTableName(tableName) + "未找到主键信息，确保表设计无误");
+		}
+		return queryOne(SqlUtils.getQuerySql(param, getTableName(tableName), getSqlOperate(), columns).toString(), param, returnType);
 	}
 
 	/**

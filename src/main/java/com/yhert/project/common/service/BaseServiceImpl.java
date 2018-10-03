@@ -16,11 +16,11 @@ import com.yhert.project.common.db.dao.interfaces.Dao;
  * @author Ricardo Li 2017年3月23日 下午8:39:33
  *
  */
-public abstract class BaseServiceImpl<DAO extends Dao<E>, E> implements BaseService<E> {
+public abstract class BaseServiceImpl<D extends Dao<E>, E> implements BaseService<E> {
 	protected Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	protected DAO dao;
+	protected D dao;
 
 	/**
 	 * 批量插入数据
@@ -78,7 +78,19 @@ public abstract class BaseServiceImpl<DAO extends Dao<E>, E> implements BaseServ
 	 * @return 结果
 	 */
 	@Override
-	public E get(Object pk) {
+	public E get(E pk) {
+		return this.dao.get(pk);
+	}
+
+	/**
+	 * 通过主键查询数据
+	 * 
+	 * @param pk
+	 *            主键
+	 * @return 结果
+	 */
+	@SuppressWarnings("rawtypes")
+	public E get(Map pk) {
 		return this.dao.get(pk);
 	}
 

@@ -3,6 +3,8 @@ package com.yhert.project.common.util.tree;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.yhert.project.common.beans.Model;
+
 /**
  * 默认树结构
  * 
@@ -11,7 +13,11 @@ import java.util.List;
  * @param <T>
  *            数据
  */
-public class DefaultTree<T> implements Tree<T> {
+public class DefaultTree<T> extends Model implements Tree<T> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * 子节点
 	 */
@@ -59,44 +65,6 @@ public class DefaultTree<T> implements Tree<T> {
 
 	public void setParent(Tree<T> parent) {
 		this.parent = parent;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((childrens == null) ? 0 : childrens.hashCode());
-		result = prime * result + ((node == null) ? 0 : node.hashCode());
-		result = prime * result + ((parent == null) ? 0 : parent.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		@SuppressWarnings("rawtypes")
-		DefaultTree other = (DefaultTree) obj;
-		if (childrens == null) {
-			if (other.childrens != null)
-				return false;
-		} else if (!childrens.equals(other.childrens))
-			return false;
-		if (node == null) {
-			if (other.node != null)
-				return false;
-		} else if (!node.equals(other.node))
-			return false;
-		if (parent == null) {
-			if (other.parent != null)
-				return false;
-		} else if (!parent.equals(other.parent))
-			return false;
-		return true;
 	}
 
 	@Override

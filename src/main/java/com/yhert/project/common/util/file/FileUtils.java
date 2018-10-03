@@ -32,10 +32,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	/**
 	 * 合并文件名
 	 * 
-	 * @param filepath
-	 *            文件名前半段
-	 * @param path
-	 *            文件后半段路径
+	 * @param filepath 文件名前半段
+	 * @param path     文件后半段路径
 	 * @return 合成后的文件名
 	 */
 	public static String mergeFilePath(String filepath, String path) {
@@ -59,8 +57,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 * 如：s/sdf\fe windows输出s\sdf\fe linux输出s/sdf/fe
 	 * </p>
 	 * 
-	 * @param name
-	 *            文件名
+	 * @param name 文件名
 	 * @return 处理后数据
 	 */
 	public static String fileNameFormat(String name) {
@@ -104,8 +101,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	/**
 	 * 打开文件,如果没有就在jar上下文查找
 	 * 
-	 * @param filename
-	 *            文件
+	 * @param filename 文件
 	 * @return 连接，没找到返回null
 	 */
 	public static InputStream openInputStream(String filename) {
@@ -129,10 +125,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	/**
 	 * 将输入流写到临时文件进行处理
 	 * 
-	 * @param inputStream
-	 *            输入流
-	 * @param callback
-	 *            回调
+	 * @param inputStream 输入流
+	 * @param callback    回调
 	 */
 	public static void inputStreamTempFileDeal(InputStream inputStream, InputStreamTempFileDealCallback callback) {
 		inputStreamTempFileDeal(inputStream, "tmp", callback);
@@ -141,12 +135,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	/**
 	 * 将输入流写到临时文件进行处理
 	 * 
-	 * @param inputStream
-	 *            输入流
-	 * @param suffix
-	 *            后缀名称
-	 * @param callback
-	 *            回调
+	 * @param inputStream 输入流
+	 * @param suffix      后缀名称
+	 * @param callback    回调
 	 */
 	public static void inputStreamTempFileDeal(InputStream inputStream, String suffix,
 			InputStreamTempFileDealCallback callback) {
@@ -179,11 +170,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 */
 	public static interface InputStreamTempFileDealCallback {
 		/**
-		 * 获得value
+		 * 处理文件，使用完后将被删除
 		 * 
-		 * @param key
-		 *            键
-		 * @return 结果
+		 * @param file 文件信息
 		 */
 		default void apply(File file) {
 		}
@@ -192,10 +181,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	/**
 	 * 扫描文件
 	 * 
-	 * @param file
-	 *            文件
-	 * @param suffix
-	 *            后缀
+	 * @param file   文件
+	 * @param suffix 后缀
 	 * @return 结果
 	 */
 	public static List<File> scanFile(File file, String suffix) {
@@ -216,8 +203,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	/**
 	 * 扫描文件
 	 * 
-	 * @param file
-	 *            文件
+	 * @param file 文件
 	 * @return 结果
 	 */
 	public static List<File> scanFile(File file) {
@@ -226,12 +212,10 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	}
 
 	/**
-	 * 扫描文件
+	 * 扫描所有文件
 	 * 
-	 * @param file
-	 *            文件
-	 * @param callback
-	 *            回调
+	 * @param file     文件
+	 * @param callback 回调
 	 * @return 结果
 	 */
 	public static List<File> scanFile(File file, ScanFileSystemCallback callback) {
@@ -249,12 +233,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	}
 
 	/**
-	 * 扫描目录
+	 * 扫描目录以及文件
 	 * 
-	 * @param file
-	 *            文件
-	 * @param callback
-	 *            回调
+	 * @param file 文件
 	 * @return 结果
 	 */
 	public static List<File> scanDirectory(File file) {
@@ -265,10 +246,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	/**
 	 * 扫描目录
 	 * 
-	 * @param file
-	 *            文件
-	 * @param callback
-	 *            回调
+	 * @param file     文件
+	 * @param callback 回调
 	 * @return 结果
 	 */
 	public static List<File> scanDirectory(File file, ScanFileSystemCallback callback) {
@@ -288,10 +267,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	/**
 	 * 扫描文件系统
 	 * 
-	 * @param file
-	 *            文件
-	 * @param callback
-	 *            回调
+	 * @param file     文件
+	 * @param callback 回调
 	 * @return 结果
 	 */
 	public static List<File> scanFileSystem(File file, ScanFileSystemCallback callback) {
@@ -305,12 +282,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	/**
 	 * 递归扫描
 	 * 
-	 * @param file
-	 *            文件
-	 * @param files
-	 *            文件
-	 * @param callback
-	 *            回调
+	 * @param file     文件
+	 * @param files    文件
+	 * @param callback 回调
 	 */
 	private static void scanFileSystemDeep(File file, List<File> files, ScanFileSystemCallback callback) {
 		for (File f : file.listFiles()) {
@@ -331,10 +305,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 */
 	public static interface ScanFileSystemCallback {
 		/**
-		 * 获得value
+		 * 判断是否将扫描到的文件加入文件池，若为文件夹则判断是否继续扫描此文件夹
 		 * 
-		 * @param key
-		 *            键
+		 * @param file 文件
 		 * @return 结果
 		 */
 		default boolean apply(File file) {

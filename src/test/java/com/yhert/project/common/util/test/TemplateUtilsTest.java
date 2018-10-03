@@ -1,5 +1,7 @@
 package com.yhert.project.common.util.test;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,17 +29,20 @@ public class TemplateUtilsTest {
 
 	@Test
 	public void freemarkerFtl2Str() {
-		System.out.println(
-				TemplateUtils.freemarkerFtl2Str("templateUtils/temp.ftl", Param.getParam("test", "test data")));
+		StringBuilder tmplr = new StringBuilder();
+		tmplr.append("===============================");
+		tmplr.append("测试模板：");
+		tmplr.append("test datas");
+
+		String rr = TemplateUtils.freemarkerFtl2Str("templateUtils/temp.ftl", Param.getParam("test", "test data"));
+		System.out.println(rr);
+		assertTrue("freemarker模板测试未通过", tmplr.toString().replaceAll("\n", "").equals(rr.replaceAll("\n", "")));
+
 		StringBuilder tmpl = new StringBuilder();
-		tmpl.append("===============================\n");
-		tmpl.append("测试模板：\n");
-		tmpl.append("<#if test??>\n");
-		tmpl.append("${test}\n");
-		tmpl.append("</#if>\n");
-		tmpl.append("<#if !test??>\n");
-		tmpl.append("test参数不存在\n");
-		tmpl.append("</#if>\n");
-		System.out.println(TemplateUtils.freemarkerTmpl2Str(tmpl.toString(), Param.getParam("test", "test data")));
+		tmpl.append("===============================测试模板：<#if test??>${test}</#if><#if !test??>test参数不存在</#if>s");
+		String r = TemplateUtils.freemarkerTmpl2Str(tmpl.toString(), Param.getParam("test", "test data"));
+		System.out.println(r);
+
+		assertTrue("freemarker模板测试未通过", tmplr.toString().replaceAll("\n", "").equals(r.replaceAll("\n", "")));
 	}
 }

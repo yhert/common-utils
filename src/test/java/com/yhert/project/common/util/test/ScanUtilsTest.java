@@ -1,5 +1,9 @@
 package com.yhert.project.common.util.test;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.Set;
+
 import org.junit.Test;
 
 import com.yhert.project.common.util.ClassScanUtils;
@@ -7,7 +11,9 @@ import com.yhert.project.common.util.ClassScanUtils;
 public class ScanUtilsTest {
 	@Test
 	public void scan() throws Exception {
-		System.out.println(ClassScanUtils.scanAllClass("com.yhert.*"));
+		Set<Class<?>> scanAllClass = ClassScanUtils.scanAllClass("com.yhert.*");
+		System.out.println(scanAllClass);
+		assertTrue("扫描java类工具出错", scanAllClass.size() > 0);
 		// Long[] sfa = new Long[2];
 		// Class<?> type = sfa.getClass();
 		// System.out.println(type);

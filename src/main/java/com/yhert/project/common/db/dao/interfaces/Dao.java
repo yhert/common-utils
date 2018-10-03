@@ -11,18 +11,13 @@ import com.yhert.project.common.db.dao.IDao;
  * 
  * @author Ricardo Li 2017年5月6日 下午1:57:22
  *
- * @param <E>
- *            操作
+ * @param <E> 操作
  */
 public interface Dao<E> {
 	/**
-	 * 排序字段常量
+	 * 排序信息，格式：字段 (空格)顺序[asc|desc]，多个使用,(逗号分隔)，示例：create_time desc,id asc,name
 	 */
-	public static String SORT_COLUMN = IDao.SORT_COLUMN;
-	/**
-	 * 排序类型常量，asc,desc
-	 */
-	public static String SORT_TTYPE = IDao.SORT_TTYPE;
+	public static String SORT = IDao.SORT;
 	/**
 	 * 排序类型常量，asc
 	 */
@@ -36,15 +31,14 @@ public interface Dao<E> {
 	 */
 	public static String LIMIT = IDao.LIMIT;
 	/**
-	 * 开始位置常量
+	 * 分页时开始位置常量
 	 */
 	public static String START = IDao.START;
 
 	/**
 	 * 批量插入数据
 	 * 
-	 * @param param
-	 *            对象
+	 * @param param 对象
 	 * @return 受影响数目
 	 */
 	int insertMapList(List<?> param);
@@ -52,8 +46,7 @@ public interface Dao<E> {
 	/**
 	 * 批量插入数据
 	 * 
-	 * @param objs
-	 *            对象
+	 * @param objs 对象
 	 * @return 受影响数目
 	 */
 	int insert(List<E> objs);
@@ -61,8 +54,7 @@ public interface Dao<E> {
 	/**
 	 * 插入对象
 	 * 
-	 * @param obj
-	 *            对象
+	 * @param obj 对象
 	 * @return 受影响数目
 	 */
 	int insert(E obj);
@@ -70,8 +62,7 @@ public interface Dao<E> {
 	/**
 	 * 插入对象
 	 * 
-	 * @param param
-	 *            插入的数据
+	 * @param param 插入的数据
 	 * @return 受影响数目
 	 */
 	@SuppressWarnings("rawtypes")
@@ -80,8 +71,7 @@ public interface Dao<E> {
 	/**
 	 * 删除的数据
 	 * 
-	 * @param param
-	 *            判断条件
+	 * @param param 判断条件
 	 * @return 受影响的数据
 	 */
 	@SuppressWarnings("rawtypes")
@@ -90,8 +80,7 @@ public interface Dao<E> {
 	/**
 	 * 删除数据
 	 * 
-	 * @param obj
-	 *            对象
+	 * @param obj 对象
 	 * @return 受影响的数据
 	 */
 	int delete(E obj);
@@ -99,10 +88,8 @@ public interface Dao<E> {
 	/**
 	 * 更新指定字段
 	 * 
-	 * @param updateColumn
-	 *            更新字段
-	 * @param whereParam
-	 *            更新条件
+	 * @param updateColumn 更新字段
+	 * @param whereParam   更新条件
 	 * @return 受影响数目
 	 */
 	@SuppressWarnings("rawtypes")
@@ -111,10 +98,8 @@ public interface Dao<E> {
 	/**
 	 * 更新数据
 	 * 
-	 * @param obj
-	 *            对象
-	 * @param param
-	 *            更新信息
+	 * @param obj   对象
+	 * @param param 更新信息
 	 * @return 受影响数目
 	 */
 	@SuppressWarnings("rawtypes")
@@ -123,8 +108,7 @@ public interface Dao<E> {
 	/**
 	 * 更新数据
 	 * 
-	 * @param obj
-	 *            对象
+	 * @param obj 对象
 	 * @return 受影响数目
 	 */
 	int update(E obj);
@@ -132,10 +116,8 @@ public interface Dao<E> {
 	/**
 	 * 查询现骨干数据取出其中的一个
 	 * 
-	 * @param whereObj
-	 *            条件
-	 * @param returnType
-	 *            返回值类型
+	 * @param whereObj   条件
+	 * @param returnType 返回值类型
 	 * @return 结果
 	 */
 	<V> V queryOne(Object whereObj, Class<V> returnType);
@@ -143,10 +125,8 @@ public interface Dao<E> {
 	/**
 	 * 查询现骨干数据取出其中的一个
 	 * 
-	 * @param whereParam
-	 *            条件
-	 * @param returnType
-	 *            返回值类型
+	 * @param whereParam 条件
+	 * @param returnType 返回值类型
 	 * @return 结果
 	 */
 	@SuppressWarnings("rawtypes")
@@ -155,8 +135,7 @@ public interface Dao<E> {
 	/**
 	 * 通过参数直接查询相关数据
 	 * 
-	 * @param whereObj
-	 *            直接查询
+	 * @param whereObj 直接查询
 	 * @return 结果
 	 */
 	E queryOne(Object whereObj);
@@ -164,8 +143,7 @@ public interface Dao<E> {
 	/**
 	 * 通过参数直接查询相关数据
 	 * 
-	 * @param whereParam
-	 *            直接查询
+	 * @param whereParam 直接查询
 	 * @return 结果
 	 */
 	@SuppressWarnings("rawtypes")
@@ -174,17 +152,24 @@ public interface Dao<E> {
 	/**
 	 * 通过主键查询数据
 	 * 
-	 * @param pk
-	 *            主键
+	 * @param pk 主键
 	 * @return 结果
 	 */
-	E get(Object pk);
+	E get(E pk);
+
+	/**
+	 * 通过主键查询数据
+	 * 
+	 * @param pk 主键
+	 * @return 结果
+	 */
+	@SuppressWarnings("rawtypes")
+	E get(Map pk);
 
 	/**
 	 * 查询数据，并进行分页
 	 * 
-	 * @param whereParam
-	 *            参数
+	 * @param whereParam 参数
 	 * @return 结果
 	 */
 	@SuppressWarnings("rawtypes")
@@ -193,8 +178,7 @@ public interface Dao<E> {
 	/**
 	 * 查询数据，并进行分页
 	 * 
-	 * @param whereObj
-	 *            参数
+	 * @param whereObj 参数
 	 * @return 结果
 	 */
 	<T> List<T> queryListLimit(Object whereObj);
@@ -202,8 +186,7 @@ public interface Dao<E> {
 	/**
 	 * 查询功能
 	 * 
-	 * @param whereObj
-	 *            参数
+	 * @param whereObj 参数
 	 * @return 查詢結果
 	 */
 	Result<E> query(Object whereObj);
@@ -211,8 +194,7 @@ public interface Dao<E> {
 	/**
 	 * 查询功能
 	 * 
-	 * @param whereParam
-	 *            参数
+	 * @param whereParam 参数
 	 * @return 查詢結果
 	 */
 	@SuppressWarnings("rawtypes")

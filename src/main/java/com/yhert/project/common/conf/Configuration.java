@@ -44,8 +44,7 @@ public class Configuration implements Serializable {
 	/**
 	 * 加载配置文件
 	 * 
-	 * @param filename
-	 *            文件名
+	 * @param filename 文件名
 	 */
 	public void loadProperties(String filename) {
 		loadProperties(FileUtils.openInputStream(filename));
@@ -54,8 +53,7 @@ public class Configuration implements Serializable {
 	/**
 	 * 加载配置
 	 * 
-	 * @param file
-	 *            文件
+	 * @param file 文件
 	 */
 	public void loadProperties(File file) {
 		try {
@@ -70,8 +68,7 @@ public class Configuration implements Serializable {
 	/**
 	 * 加载配置
 	 * 
-	 * @param inputStream
-	 *            文件流
+	 * @param inputStream 文件流
 	 */
 	public void loadProperties(InputStream inputStream) {
 		try {
@@ -97,10 +94,8 @@ public class Configuration implements Serializable {
 	/**
 	 * 插入对象
 	 * 
-	 * @param key
-	 *            键
-	 * @param value
-	 *            值
+	 * @param key   键
+	 * @param value 值
 	 */
 	public void put(String key, Object value) {
 		String val = null;
@@ -113,8 +108,7 @@ public class Configuration implements Serializable {
 	/**
 	 * 插入所有数据
 	 * 
-	 * @param map
-	 *            map
+	 * @param map map
 	 */
 	public void putAll(Map<String, String> map) {
 		this.config.putAll(map);
@@ -139,8 +133,7 @@ public class Configuration implements Serializable {
 	/**
 	 * 设置配置
 	 * 
-	 * @param config
-	 *            配置
+	 * @param config 配置
 	 */
 	public void setConfig(Map<String, String> config) {
 		this.config = config;
@@ -149,8 +142,7 @@ public class Configuration implements Serializable {
 	/**
 	 * 通过Key获得信息
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 值
 	 */
 	public Object getByKey(String key) {
@@ -171,10 +163,8 @@ public class Configuration implements Serializable {
 	/**
 	 * 获得boolean类型的数据
 	 * 
-	 * @param key
-	 *            键
-	 * @param def
-	 *            默认值
+	 * @param key 键
+	 * @param def 默认值
 	 * @return 值
 	 */
 	public boolean getBoolean(String key, boolean def) {
@@ -189,8 +179,7 @@ public class Configuration implements Serializable {
 	/**
 	 * 获得boolean配置信息
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 值
 	 */
 	public boolean getBoolean(String key) {
@@ -209,10 +198,8 @@ public class Configuration implements Serializable {
 	/**
 	 * 获得String类型的数据
 	 * 
-	 * @param key
-	 *            键
-	 * @param def
-	 *            默认值
+	 * @param key 键
+	 * @param def 默认值
 	 * @return 值
 	 */
 	public String getString(String key, String def) {
@@ -227,8 +214,7 @@ public class Configuration implements Serializable {
 	/**
 	 * 获得String配置信息
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 值
 	 */
 	public String getString(String key) {
@@ -243,10 +229,8 @@ public class Configuration implements Serializable {
 	/**
 	 * 获得long类型的数据
 	 * 
-	 * @param key
-	 *            键
-	 * @param def
-	 *            默认值
+	 * @param key 键
+	 * @param def 默认值
 	 * @return 值
 	 */
 	public long getLong(String key, long def) {
@@ -267,8 +251,7 @@ public class Configuration implements Serializable {
 	/**
 	 * 获得long配置信息
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 值
 	 */
 	public long getLong(String key) {
@@ -287,10 +270,8 @@ public class Configuration implements Serializable {
 	/**
 	 * 获得byte类型的数据
 	 * 
-	 * @param key
-	 *            键
-	 * @param def
-	 *            默认值
+	 * @param key 键
+	 * @param def 默认值
 	 * @return 值
 	 */
 	public byte getByte(String key, byte def) {
@@ -311,8 +292,7 @@ public class Configuration implements Serializable {
 	/**
 	 * 获得byte配置信息
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 值
 	 */
 	public byte getByte(String key) {
@@ -331,10 +311,8 @@ public class Configuration implements Serializable {
 	/**
 	 * 获得short类型的数据
 	 * 
-	 * @param key
-	 *            键
-	 * @param def
-	 *            默认值
+	 * @param key 键
+	 * @param def 默认值
 	 * @return 值
 	 */
 	public short getShort(String key, short def) {
@@ -355,8 +333,7 @@ public class Configuration implements Serializable {
 	/**
 	 * 获得short配置信息
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 值
 	 */
 	public short getShort(String key) {
@@ -376,10 +353,8 @@ public class Configuration implements Serializable {
 	/**
 	 * 获得float类型的数据
 	 * 
-	 * @param key
-	 *            键
-	 * @param def
-	 *            默认值
+	 * @param key 键
+	 * @param def 默认值
 	 * @return 值
 	 */
 	public float getFloat(String key, float def) {
@@ -400,8 +375,7 @@ public class Configuration implements Serializable {
 	/**
 	 * 获得float配置信息
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 值
 	 */
 	public float getFloat(String key) {
@@ -420,10 +394,8 @@ public class Configuration implements Serializable {
 	/**
 	 * 获得int类型的数据
 	 * 
-	 * @param key
-	 *            键
-	 * @param def
-	 *            默认值
+	 * @param key 键
+	 * @param def 默认值
 	 * @return 值
 	 */
 	public int getInt(String key, int def) {
@@ -444,8 +416,7 @@ public class Configuration implements Serializable {
 	/**
 	 * 获得Int配置信息
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 值
 	 */
 	public int getInt(String key) {
@@ -465,10 +436,8 @@ public class Configuration implements Serializable {
 	/**
 	 * 获得double类型的数据
 	 * 
-	 * @param key
-	 *            键
-	 * @param def
-	 *            默认值
+	 * @param key 键
+	 * @param def 默认值
 	 * @return 值
 	 */
 	public double getDouble(String key, double def) {
@@ -489,8 +458,7 @@ public class Configuration implements Serializable {
 	/**
 	 * 获得double配置信息
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 值
 	 */
 	public double getDouble(String key) {
@@ -509,10 +477,8 @@ public class Configuration implements Serializable {
 	/**
 	 * 解析成时间长度
 	 * 
-	 * @param key
-	 *            键
-	 * @param def
-	 *            默认值
+	 * @param key 键
+	 * @param def 默认值
 	 * @return 时间长度（毫秒）
 	 */
 	public long getTime(String key, Object def) {
@@ -534,8 +500,7 @@ public class Configuration implements Serializable {
 	/**
 	 * 解析成时间长度
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 时间长度（毫秒）
 	 */
 	public long getTime(String key) {
@@ -554,10 +519,8 @@ public class Configuration implements Serializable {
 	/**
 	 * 解析成文件大小
 	 * 
-	 * @param key
-	 *            键
-	 * @param def
-	 *            默认值
+	 * @param key 键
+	 * @param def 默认值
 	 * @return 时间长度（毫秒）
 	 */
 	public long getFileSize(String key, Object def) {
@@ -579,10 +542,7 @@ public class Configuration implements Serializable {
 	/**
 	 * 解析成文件大小
 	 * 
-	 * @param key
-	 *            键
-	 * @param def
-	 *            默认值
+	 * @param key 键
 	 * @return 大小（字节）
 	 */
 	public long getFileSize(String key) {

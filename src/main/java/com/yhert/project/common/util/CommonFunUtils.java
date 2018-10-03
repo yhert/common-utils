@@ -7,10 +7,13 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import com.yhert.project.common.excp.ApplicationException;
+import com.yhert.project.common.excp.app.ApplicationException;
+import com.yhert.project.common.util.expression.ExpressionUnit;
+import com.yhert.project.common.util.expression.ExpressionUtils;
+import com.yhert.project.common.util.net.NetUtils;
+import com.yhert.project.common.util.sys.SystemUtils;
 
 /**
  * 字符串操作函数
@@ -31,10 +34,8 @@ public class CommonFunUtils {
 	/**
 	 * 将数组合成字符串
 	 * 
-	 * @param list
-	 *            数组
-	 * @param code
-	 *            分隔符
+	 * @param list 数组
+	 * @param code 分隔符
 	 * @return 字符串
 	 */
 	public static String join(Object[] list, String code) {
@@ -44,10 +45,8 @@ public class CommonFunUtils {
 	/**
 	 * 将数组合成字符串
 	 * 
-	 * @param list
-	 *            数组
-	 * @param code
-	 *            分隔符
+	 * @param list 数组
+	 * @param code 分隔符
 	 * @return 字符串
 	 */
 	@SuppressWarnings("rawtypes")
@@ -65,32 +64,33 @@ public class CommonFunUtils {
 	/**
 	 * 解析文件尺寸
 	 * 
-	 * @param size
-	 *            文件大小
+	 * @param size 文件大小
 	 * @return 大小
 	 */
 	public static long parseFileSize(String size) {
-		Double dsize = 0D;
-		if (!StringUtils.isEmpty(size)) {
-			size = size.toUpperCase();
-			if (size.endsWith("KB")) {
-				dsize = Double.valueOf(size.substring(0, size.length() - 2)) * 1024;
-			} else if (size.endsWith("MB")) {
-				dsize = Double.valueOf(size.substring(0, size.length() - 2)) * 1024 * 1024;
-			} else if (size.endsWith("GB")) {
-				dsize = Double.valueOf(size.substring(0, size.length() - 2)) * 1024 * 1024 * 1024;
-			} else {
-				dsize = Double.valueOf(size);
+		return (long) ExpressionUtils.runArithmetic(size, new ExpressionUnit() {
+
+			@Override
+			public Double getRate(String unit) {
+				if ("KB".equalsIgnoreCase(unit)) {
+					return 1024.0;
+				} else if ("MB".equalsIgnoreCase(unit)) {
+					return 1024.0 * 1024.0;
+				} else if ("GB".equalsIgnoreCase(unit)) {
+					return 1024.0 * 1024.0 * 1024.0;
+				} else if ("TB".equalsIgnoreCase(unit)) {
+					return 1024.0 * 1024.0 * 1024.0 * 1024.0;
+				} else {
+					return 1.0;
+				}
 			}
-		}
-		return dsize.longValue();
+		});
 	}
 
 	/**
 	 * 将String解析为Boolean类型
 	 * 
-	 * @param source
-	 *            数据
+	 * @param source 数据
 	 * @return 结果
 	 */
 	public static Boolean parseBoolean(String source) {
@@ -115,8 +115,7 @@ public class CommonFunUtils {
 	/**
 	 * 处理为long信息
 	 * 
-	 * @param source
-	 *            原数据
+	 * @param source 原数据
 	 * @return 信息
 	 */
 	public static Long parseLong(String source) {
@@ -136,8 +135,7 @@ public class CommonFunUtils {
 	/**
 	 * 装换为List
 	 * 
-	 * @param t
-	 *            数据
+	 * @param t 数据
 	 * @return list
 	 */
 	public static <T> List<T> toList(T t) {
@@ -149,8 +147,7 @@ public class CommonFunUtils {
 	/**
 	 * 国际距离（米）距离转换为经纬度距离
 	 * 
-	 * @param dis
-	 *            距离（单位：米）
+	 * @param dis 距离（单位：米）
 	 * @return 经纬度距离（单位：度）
 	 */
 	public static double distance2Latitude(double dis) {
@@ -160,8 +157,7 @@ public class CommonFunUtils {
 	/**
 	 * 经纬度距离转换为国际距离（米）距离
 	 * 
-	 * @param lat
-	 *            经纬度距离（单位：度）
+	 * @param lat 经纬度距离（单位：度）
 	 * @return 距离（单位：米）
 	 */
 	public static double latitude2Distance(double lat) {
@@ -171,10 +167,8 @@ public class CommonFunUtils {
 	/**
 	 * 抛出异常
 	 * 
-	 * @param obj
-	 *            为空时抛出异常
-	 * @param msg
-	 *            异常信息
+	 * @param obj 为空时抛出异常
+	 * @param msg 异常信息
 	 */
 	public static void nullException(Object obj, String msg) {
 		if (isNe(obj)) {
@@ -185,8 +179,7 @@ public class CommonFunUtils {
 	/**
 	 * 判断是否空，字符串为空
 	 * 
-	 * @param obj
-	 *            需要判断的对象
+	 * @param obj 需要判断的对象
 	 * @return 判断结果
 	 */
 	public static boolean isNe(Object obj) {
@@ -206,8 +199,7 @@ public class CommonFunUtils {
 	/**
 	 * 判断是否为空，包括容器是否为空
 	 * 
-	 * @param obj
-	 *            需要判断的对象
+	 * @param obj 需要判断的对象
 	 * @return 判断结果
 	 */
 	public static boolean isEntry(Object obj) {
@@ -240,13 +232,6 @@ public class CommonFunUtils {
 	 * @return UUID uuid
 	 */
 	public static String getUUID(Object... args) {
-		// StringBuffer sb = new StringBuffer();
-		// sb.append(getTTID());
-		// sb.append(RandomUtils.nextLong());
-		// for (Object obj : args) {
-		// sb.append(obj);
-		// }
-		// return DigestUtils.md5Hex(sb.toString());
 		String s = UUID.randomUUID().toString();
 		return s.replaceAll("-", "");
 	}
@@ -265,8 +250,7 @@ public class CommonFunUtils {
 	/**
 	 * 解析十六进制
 	 * 
-	 * @param hex
-	 *            字符串
+	 * @param hex 字符串
 	 * @return 结果
 	 */
 	private static long passHex(String hex) {
@@ -285,39 +269,88 @@ public class CommonFunUtils {
 	}
 
 	/**
+	 * ttid使用的进制
+	 */
+	public static final int TTID_RADIX = 32;
+	/**
+	 * ttid时间使用的长度
+	 */
+	public static final int TTID_TIME_LENGTH = 13;
+	/**
+	 * ttid自增数据使用的长度
+	 */
+	public static final int TTID_COUNT_LENGTH = 3;
+	/**
+	 * ttid自增数据最大值
+	 */
+	public static final int TTID_COUNT_MAX = (int) Math.pow(32, 3);
+
+	/**
+	 * ttid设备号
+	 */
+	public static final String TTID_DRIVER_ID = getDriver32();
+
+	/**
 	 * 获得由时间序列,设备号和计数组合成的ID值
 	 * 
 	 * @return ID编号
 	 */
 	public static String getTTID() {
-		StringBuffer sb = new StringBuffer();
-		sb.append(String.format("%013d", System.currentTimeMillis()));
-		if (!StringUtils.isEmpty(deviceCode)) {
-			sb.append(deviceCode);
-		}
-		sb.append(String.format("%06d", getidCount()));
-		return sb.toString();
+		String time32 = Long.toString(System.currentTimeMillis(), TTID_RADIX);
+		String count32 = Long.toString(getidCount(), TTID_RADIX);
+		StringBuilder sb = new StringBuilder("1");
+		appendStr(sb, time32, TTID_TIME_LENGTH);
+		sb.append(TTID_DRIVER_ID);
+		appendStr(sb, count32, TTID_COUNT_LENGTH);
+		return sb.toString().toUpperCase();
 	}
 
 	/**
-	 * 设备号
+	 * 追加字符串
+	 * 
+	 * @param sb     目标字符串
+	 * @param value  值
+	 * @param length 总长度
 	 */
-	private static String deviceCode = String.format("%06d", RandomUtils.nextInt(0, 999999));
+	private static StringBuilder appendStr(StringBuilder sb, String value, int length) {
+		if (value.length() >= length) {
+			sb.append(value.substring(value.length() - length));
+		} else {
+			for (int i = value.length(); i < length; i++) {
+				sb.append("0");
+			}
+			sb.append(value);
+		}
+		return sb;
+	}
+
+	/**
+	 * 获得设备32进制编号
+	 * 
+	 * @return 设备号
+	 */
+	private static String getDriver32() {
+		String mac = NetUtils.getLocalMac().values().toArray(new String[] {})[0];
+		mac = mac.replaceAll("-", "");
+		long macI = Long.parseLong(mac, 16);
+		String mac32 = Long.toString(macI, 32);
+
+		String processName = SystemUtils.getProcessName();
+		String[] pns = processName.split("@");
+		int a = pns[1].hashCode();
+		int p = Integer.parseInt(pns[0]);
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(mac32);
+		appendStr(sb, Long.toString(a % TTID_COUNT_MAX, 32), TTID_COUNT_LENGTH);
+		appendStr(sb, Long.toString(p % ((int) Math.pow(32, 3)), 32), 3);
+		return sb.toString();
+	}
 
 	/**
 	 * IdCount计数，随机数用于保证多个服务器启动时不容易出现相同的开始值
 	 */
 	private static volatile AtomicLong idCount = new AtomicLong(0);
-
-	/**
-	 * 设置设备号（默认6位随机数）
-	 * 
-	 * @param deviceCode
-	 *            设备号
-	 */
-	public static void setDeviceCode(String deviceCode) {
-		CommonFunUtils.deviceCode = deviceCode;
-	}
 
 	/**
 	 * 获得计数
@@ -326,7 +359,7 @@ public class CommonFunUtils {
 	 */
 	private static int getidCount() {
 		long id = idCount.addAndGet(1);
-		id %= 100000;
+		id %= TTID_COUNT_MAX;
 		return (int) id;
 	}
 }

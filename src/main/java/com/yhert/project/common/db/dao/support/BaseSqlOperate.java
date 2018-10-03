@@ -1,16 +1,13 @@
 package com.yhert.project.common.db.dao.support;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.yhert.project.common.db.operate.DbExecution;
-import com.yhert.project.common.util.StringUtils;
 import com.yhert.project.common.util.db.Column;
 import com.yhert.project.common.util.db.DBUtils;
-import com.yhert.project.common.util.db.Table;
 
 /**
  * 基础SQL操作
@@ -60,38 +57,6 @@ public abstract class BaseSqlOperate implements SqlOperate {
 	 * 表单主键缓存数据
 	 */
 	protected static final Map<String, Set<String>> tablePrimaryKeyCacheMap = new HashMap<>();
-
-	@Override
-	public Set<String> getTablePrimaryKey(String tableName) {
-		if (StringUtils.isEmpty(tableName)) {
-			throw new IllegalArgumentException("表名称不能为空");
-		}
-		String[] tns = DBUtils.dealTableName(tableName);
-		String cacheKey = null;
-		if (StringUtils.isEmpty(tns[0])) {
-			cacheKey = tns[1];
-		} else {
-			cacheKey = tns[0] + "." + tns[1];
-		}
-		Set<String> pkSet = tablePrimaryKeyCacheMap.get(cacheKey);
-		if (null == pkSet) {
-			synchronized (tablePrimaryKeyCacheMap) {
-				pkSet = tablePrimaryKeyCacheMap.get(cacheKey);
-				if (null == pkSet) {
-					pkSet = new HashSet<>();
-					List<Table> tables = DBUtils.getDbOperate(dbExecution).getColumn(tableName);
-					Table table = tables.get(0);
-					for (Column column : table.getColumns()) {
-						if (column.isPk()) {
-							pkSet.add(column.getColumnName().toLowerCase());
-						}
-					}
-					tablePrimaryKeyCacheMap.put(cacheKey, pkSet);
-				}
-			}
-		}
-		return pkSet;
-	}
 
 	/**
 	 * 格式化表名

@@ -13,10 +13,25 @@ public class MyColumn extends Column {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * 下划线命名法命名的字段名（user_id）
+	 */
 	private String uname;
+	/**
+	 * 驼峰命名法命名的字段名(userId)
+	 */
 	private String cname;
+	/**
+	 * 类型名称
+	 */
 	private String typeName;
+	/**
+	 * 帕萨卡命名法命名的字段名(UserId)
+	 */
 	private String ucname;
+	/**
+	 * 存在尺寸大小
+	 */
 	private Boolean needSize = false;
 
 	public String getUname() {

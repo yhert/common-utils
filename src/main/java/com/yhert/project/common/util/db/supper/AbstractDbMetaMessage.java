@@ -417,6 +417,8 @@ public abstract class AbstractDbMetaMessage implements DbMetadataMessage {
 			column.setType(byte[].class);
 		} else if ("text".equals(type)) {
 			column.setType(String.class);
+		} else if ("json".equals(type)) {
+			column.setType(String.class);
 		} else if ("longblob".equals(type)) {
 			column.setType(String.class);
 		} else if ("date".equals(type)) {
@@ -427,16 +429,34 @@ public abstract class AbstractDbMetaMessage implements DbMetadataMessage {
 			column.setType(Date.class);
 		} else if ("tinyint".equals(type)) {
 			column.setType(Boolean.class);
+		} else if ("bool".equals(type)) {
+			column.setType(Boolean.class);
 		} else if ("bit".equals(type)) {
 			column.setType(Boolean.class);
 		} else if ("int".equals(type)) {
 			column.setType(Integer.class);
+		} else if ("int4".equals(type)) {
+			column.setType(Integer.class);
+		} else if ("bigint".equals(type)) {
+			column.setType(Long.class);
+		} else if ("int2".equals(type)) {
+			column.setType(Short.class);
+		} else if ("smallint".equals(type)) {
+			column.setType(Short.class);
 		} else if ("mediumtext".equals(type)) {
 			column.setType(Long.class);
 		} else if ("float".equals(type)) {
 			column.setType(Float.class);
+		} else if ("float4".equals(type)) {
+			column.setType(Float.class);
+		} else if ("real".equals(type)) {
+			column.setType(Float.class);
 		} else if ("double".equals(type)) {
 			column.setType(Double.class);
+		} else if ("float8".equals(type)) {
+			column.setType(Double.class);
+		} else if ("numeric".equals(type)) {
+			column.setType(BigDecimal.class);
 		} else if ("decimal".equals(type)) {
 			column.setType(BigDecimal.class);
 		} else if ("binary".equals(type)) {

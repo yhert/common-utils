@@ -4,12 +4,15 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * 参数
  * 
  * @author Ricardo Li 2017年3月23日 上午9:41:36
  *
  */
+@ApiModel(value = "参数封装", description = "请求数据参数的公共封装包")
 public class Param extends HashMap<String, Object> implements Map<String, Object>, Serializable {
 	/**
 	 * 
@@ -19,8 +22,7 @@ public class Param extends HashMap<String, Object> implements Map<String, Object
 	/**
 	 * 获得一个带参数的参数对象
 	 * 
-	 * @param args
-	 *            参数
+	 * @param args 参数
 	 * @return 参数对象
 	 */
 	public static Param getParam(Object... args) {
@@ -32,8 +34,7 @@ public class Param extends HashMap<String, Object> implements Map<String, Object
 	/**
 	 * 设置值
 	 * 
-	 * @param args
-	 *            参数
+	 * @param args 参数
 	 * @return 参数对象
 	 */
 	public Param putParam(Object... args) {

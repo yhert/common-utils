@@ -1,4 +1,4 @@
-package com.yhert.project.common.util.file;
+package com.yhert.project.common.util;
 
 import java.io.ByteArrayOutputStream;
 

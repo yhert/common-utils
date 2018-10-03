@@ -1,4 +1,4 @@
-package com.yhert.project.common.excp;
+package com.yhert.project.common.excp.app;
 
 /**
  * 账户异常，例如用户名密码错误，权限不足等

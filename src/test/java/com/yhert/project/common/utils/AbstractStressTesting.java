@@ -66,6 +66,5 @@ public abstract class AbstractStressTesting {
 		System.out.println("faild   time:\t" + faildTime.get());
 		System.out.println("avg     time:\t" + avgTime);
 		System.out.println("=====================report end=====================");
-
 	}
 }

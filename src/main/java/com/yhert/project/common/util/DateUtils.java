@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.Locale;
 
 import com.yhert.project.common.excp.SerializableException;
+import com.yhert.project.common.util.expression.ExpressionUnit;
+import com.yhert.project.common.util.expression.ExpressionUtils;
 
 /**
  * 时间贡酒
@@ -17,8 +19,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	/**
 	 * 格式化时间
 	 * 
-	 * @param date
-	 *            时间字符串
+	 * @param date 时间字符串
 	 * @return 格式化后的时间
 	 */
 	public static Date parseDate(Object date) {
@@ -71,10 +72,8 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	/**
 	 * 格式化时间
 	 * 
-	 * @param date
-	 *            时间字符串
-	 * @param format
-	 *            格式
+	 * @param date   时间字符串
+	 * @param format 格式
 	 * @return 解雇偶
 	 */
 	public static Date parseDate(String date, String format) {
@@ -88,40 +87,37 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	/**
 	 * 解析时间（时间长度）
 	 * 
-	 * @param time
-	 *            时间
+	 * @param time 时间
 	 * @return 时间长度（毫秒）
 	 */
 	public static long parseTime(String time) {
-		Double dsize = 0D;
-		if (!StringUtils.isEmpty(time)) {
-			time = time.toUpperCase();
-			if (time.endsWith("MS")) {
-				dsize = Double.valueOf(time.substring(0, time.length() - 2));
-			} else if (time.endsWith("S")) {
-				dsize = Double.valueOf(time.substring(0, time.length() - 1)) * 1000;
-			} else if (time.endsWith("M")) {
-				dsize = Double.valueOf(time.substring(0, time.length() - 1)) * 60 * 1000;
-			} else if (time.endsWith("H")) {
-				dsize = Double.valueOf(time.substring(0, time.length() - 1)) * 60 * 60 * 1000;
-			} else if (time.endsWith("D")) {
-				dsize = Double.valueOf(time.substring(0, time.length() - 1)) * 24 * 60 * 60 * 1000;
-			} else if (time.endsWith("W")) {
-				dsize = Double.valueOf(time.substring(0, time.length() - 1)) * 7 * 24 * 60 * 60 * 1000;
-			} else {
-				dsize = Double.valueOf(time);
+		return (long) ExpressionUtils.runArithmetic(time, new ExpressionUnit() {
+			@Override
+			public Double getRate(String unit) {
+				if ("MS".equalsIgnoreCase(unit)) {
+					return 1.0;
+				} else if ("S".equalsIgnoreCase(unit)) {
+					return 1000.0;
+				} else if ("M".equalsIgnoreCase(unit)) {
+					return 1000.0 * 60;
+				} else if ("H".equalsIgnoreCase(unit)) {
+					return 1000.0 * 60 * 60;
+				} else if ("D".equalsIgnoreCase(unit)) {
+					return 1000.0 * 60 * 60 * 24;
+				} else if ("W".equalsIgnoreCase(unit)) {
+					return 1000.0 * 60 * 60 * 24 * 7;
+				} else {
+					return 1.0;
+				}
 			}
-		}
-		return dsize.longValue();
+		});
 	}
 
 	/**
 	 * 格式化时间
 	 * 
-	 * @param date
-	 *            时间
-	 * @param format
-	 *            格式
+	 * @param date   时间
+	 * @param format 格式
 	 * @return 结果
 	 */
 	public static String dateFormat(Date date, String format) {

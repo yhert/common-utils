@@ -2,13 +2,15 @@ package com.yhert.project.common.util.db;
 
 import java.io.Serializable;
 
+import com.yhert.project.common.beans.Model;
+
 /**
  * 字段信息
  * 
  * @author Ricardo Li 2017年6月17日 上午11:50:59
  *
  */
-public class Column implements Serializable {
+public class Column extends Model implements Serializable {
 	/**
 	 * 
 	 */
@@ -133,11 +135,6 @@ public class Column implements Serializable {
 
 	public void setIndex(boolean index) {
 		this.index = index;
-	}
-
-	@Override
-	public String toString() {
-		return "Column [pk=" + pk + ", columnName=" + columnName + ", remarks=" + remarks + ", typeName=" + typeName + ", columnSize=" + columnSize + ", nullable=" + nullable + ", columnDef=" + columnDef + ", type=" + type + ", unique=" + unique + ", index=" + index + "]";
 	}
 
 }

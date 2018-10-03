@@ -186,10 +186,21 @@ public class NetUtils {
 	 */
 	private static Ip2Address ip2Address = null;
 
+	/**
+	 * 获得一个IP地址映射器
+	 * 
+	 * @return 结果
+	 */
 	public static Ip2Address getIp2Address() {
 		return ip2Address;
 	}
 
+	/**
+	 * 设置一个IP地址映射器
+	 * 
+	 * @param ip2Address
+	 *            映射器
+	 */
 	public static void setIp2Address(Ip2Address ip2Address) {
 		NetUtils.ip2Address = ip2Address;
 	}

@@ -25,8 +25,7 @@ public interface RedisOperate {
 	/**
 	 * 获取键
 	 * 
-	 * @param pattern
-	 *            表达式
+	 * @param pattern 表达式
 	 * @return 键
 	 */
 	Set<String> keys(String pattern);
@@ -37,10 +36,8 @@ public interface RedisOperate {
 	/**
 	 * 获取序列号
 	 * 
-	 * @param key
-	 *            键
-	 * @param count
-	 *            数量
+	 * @param key   键
+	 * @param count 数量
 	 * @return 最后的序号
 	 */
 	Long getSequence(String key, long count);
@@ -48,8 +45,7 @@ public interface RedisOperate {
 	/**
 	 * 获得序列号
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 值
 	 */
 	Long getSequence(String key);
@@ -60,32 +56,25 @@ public interface RedisOperate {
 	/**
 	 * 左侧入栈
 	 * 
-	 * @param key
-	 *            键
-	 * @param value
-	 *            值
+	 * @param key   键
+	 * @param value 值
 	 */
 	<V> void pushListLeft(String key, Collection<V> value);
 
 	/**
 	 * 左侧入栈
 	 * 
-	 * @param key
-	 *            键
-	 * @param value
-	 *            值
+	 * @param key   键
+	 * @param value 值
 	 */
 	<V> void pushListLeft(String key, V value);
 
 	/**
 	 * 右侧读入
 	 * 
-	 * @param key
-	 *            键
-	 * @param timeout
-	 *            超时
-	 * @param unit
-	 *            单位
+	 * @param key     键
+	 * @param timeout 超时
+	 * @param unit    单位
 	 * @return 值
 	 */
 	<V> V popListRight(String key, long timeout, TimeUnit unit);
@@ -93,8 +82,7 @@ public interface RedisOperate {
 	/**
 	 * 右侧读入
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 值
 	 */
 	<V> V popListRight(String key);
@@ -102,32 +90,25 @@ public interface RedisOperate {
 	/**
 	 * 左侧入栈
 	 * 
-	 * @param key
-	 *            键
-	 * @param value
-	 *            值
+	 * @param key   键
+	 * @param value 值
 	 */
 	<V> void pushListRight(String key, Collection<V> value);
 
 	/**
 	 * 左侧入栈
 	 * 
-	 * @param key
-	 *            键
-	 * @param value
-	 *            值
+	 * @param key   键
+	 * @param value 值
 	 */
 	<V> void pushListRight(String key, V value);
 
 	/**
 	 * 右侧读入
 	 * 
-	 * @param key
-	 *            键
-	 * @param timeout
-	 *            超时
-	 * @param unit
-	 *            单位
+	 * @param key     键
+	 * @param timeout 超时
+	 * @param unit    单位
 	 * @return 值
 	 */
 	<V> V popListLeft(String key, long timeout, TimeUnit unit);
@@ -135,8 +116,7 @@ public interface RedisOperate {
 	/**
 	 * 右侧读入
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 值
 	 */
 	<V> V popListLeft(String key);
@@ -144,12 +124,9 @@ public interface RedisOperate {
 	/**
 	 * 获取List范围
 	 * 
-	 * @param key
-	 *            键
-	 * @param start
-	 *            开始位置
-	 * @param end
-	 *            结束位置
+	 * @param key   键
+	 * @param start 开始位置
+	 * @param end   结束位置
 	 * @return 结果
 	 */
 	<V> List<V> getListRang(String key, long start, long end);
@@ -157,44 +134,34 @@ public interface RedisOperate {
 	/**
 	 * 清除List
 	 * 
-	 * @param key
-	 *            键
-	 * @param start
-	 *            开始位置
-	 * @param end
-	 *            结束位置
+	 * @param key   键
+	 * @param start 开始位置
+	 * @param end   结束位置
 	 */
 	void removeList(String key, long start, long end);
 
 	/**
 	 * 装饰List（相当于移除指定范围外的所有元素）
 	 * 
-	 * @param key
-	 *            键
-	 * @param start
-	 *            开始位置
-	 * @param end
-	 *            结束位置
+	 * @param key   键
+	 * @param start 开始位置
+	 * @param end   结束位置
 	 */
 	void trimList(String key, long start, long end);
 
 	/**
 	 * 设置List值
 	 * 
-	 * @param key
-	 *            键
-	 * @param index
-	 *            索引
-	 * @param value
-	 *            值
+	 * @param key   键
+	 * @param index 索引
+	 * @param value 值
 	 */
 	<V> void setList(String key, long index, V value);
 
 	/**
 	 * 获得List的尺寸
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 大小
 	 */
 	Long getListSize(String key);
@@ -205,10 +172,8 @@ public interface RedisOperate {
 	/**
 	 * 设置值
 	 * 
-	 * @param key
-	 *            键
-	 * @param value
-	 *            值
+	 * @param key   键
+	 * @param value 值
 	 * @return 设置成功
 	 */
 	<T> Boolean setValueIfAbsent(String key, T value);
@@ -216,12 +181,9 @@ public interface RedisOperate {
 	/**
 	 * 设置过期时间
 	 * 
-	 * @param key
-	 *            键
-	 * @param timeout
-	 *            超时时间
-	 * @param unit
-	 *            单位
+	 * @param key     键
+	 * @param timeout 超时时间
+	 * @param unit    单位
 	 * 
 	 */
 	<T> void setExpire(String key, long timeout, TimeUnit unit);
@@ -229,8 +191,7 @@ public interface RedisOperate {
 	/**
 	 * 判断是否有键
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * 
 	 */
 	<T> Boolean hasKey(String key);
@@ -238,46 +199,35 @@ public interface RedisOperate {
 	/**
 	 * 设置值
 	 * 
-	 * @param key
-	 *            键
-	 * @param value
-	 *            值
+	 * @param key   键
+	 * @param value 值
 	 */
 	<T> void setValue(String key, T value);
 
 	/**
 	 * 设置值
 	 * 
-	 * @param key
-	 *            键
-	 * @param value
-	 *            值
-	 * @param offset
-	 *            偏移
+	 * @param key    键
+	 * @param value  值
+	 * @param offset 偏移
 	 */
 	<T> void setValue(String key, T value, long offset);
 
 	/**
 	 * 设置值
 	 * 
-	 * @param key
-	 *            键
-	 * @param value
-	 *            值
-	 * @param timeout
-	 *            超时
-	 * @param unit
-	 *            单位
+	 * @param key     键
+	 * @param value   值
+	 * @param timeout 超时
+	 * @param unit    单位
 	 */
 	<T> void setValue(String key, T value, long timeout, TimeUnit unit);
 
 	/**
 	 * 增加值
 	 * 
-	 * @param key
-	 *            键
-	 * @param delta
-	 *            值
+	 * @param key   键
+	 * @param delta 值
 	 * @return 结果
 	 */
 	Double addValue(String key, double delta);
@@ -285,10 +235,8 @@ public interface RedisOperate {
 	/**
 	 * 增加值
 	 * 
-	 * @param key
-	 *            键
-	 * @param delta
-	 *            值
+	 * @param key   键
+	 * @param delta 值
 	 * @return 结果
 	 */
 	Long addValue(String key, long delta);
@@ -296,24 +244,21 @@ public interface RedisOperate {
 	/**
 	 * 删除值
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 */
 	void delete(String key);
 
 	/**
 	 * 删除数据
 	 * 
-	 * @param keys
-	 *            字段
+	 * @param keys 字段
 	 */
 	void delete(Collection<String> keys);
 
 	/**
 	 * 获得值
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 值
 	 */
 	<V> V getValue(String key);
@@ -321,8 +266,7 @@ public interface RedisOperate {
 	/**
 	 * 获得值
 	 * 
-	 * @param key
-	 *            键
+	 * @param keys 键
 	 * @return 值
 	 */
 	<V> List<V> getValue(Collection<String> keys);
@@ -333,34 +277,26 @@ public interface RedisOperate {
 	/**
 	 * 如果没有数据就插入数据到Hash
 	 * 
-	 * @param key
-	 *            键
-	 * @param field
-	 *            字段
-	 * @param value
-	 *            值
+	 * @param key   键
+	 * @param field 字段
+	 * @param value 值
 	 */
 	<V> void setHashIfAbsent(String key, String field, V value);
 
 	/**
 	 * 插入数据到Hash
 	 * 
-	 * @param key
-	 *            键
-	 * @param field
-	 *            字段
-	 * @param value
-	 *            值
+	 * @param key   键
+	 * @param field 字段
+	 * @param value 值
 	 */
 	<V> void setHash(String key, String field, V value);
 
 	/**
 	 * 插入数据到Hash
 	 * 
-	 * @param key
-	 *            键
-	 * @param map
-	 *            值
+	 * @param key 键
+	 * @param map 值
 	 */
 	@SuppressWarnings({ "rawtypes" })
 	<V> void setHash(String key, Map map);
@@ -368,20 +304,16 @@ public interface RedisOperate {
 	/**
 	 * 删除Hash值
 	 * 
-	 * @param key
-	 *            键
-	 * @param field
-	 *            值
+	 * @param key   键
+	 * @param field 值
 	 */
 	<V> void deleteHash(String key, String... field);
 
 	/**
 	 * 是否存在此键
 	 * 
-	 * @param key
-	 *            键
-	 * @param field
-	 *            字段
+	 * @param key   键
+	 * @param field 字段
 	 * @return 结果
 	 */
 	<V> Boolean hasHashKey(String key, String field);
@@ -389,10 +321,8 @@ public interface RedisOperate {
 	/**
 	 * 获取Hash中的值
 	 * 
-	 * @param key
-	 *            键
-	 * @param field
-	 *            字段
+	 * @param key   键
+	 * @param field 字段
 	 * @return 值
 	 */
 	<V> V getHash(String key, String field);
@@ -400,8 +330,7 @@ public interface RedisOperate {
 	/**
 	 * 获取map树
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 值
 	 */
 	<V> Map<String, V> getHash(String key);
@@ -409,10 +338,8 @@ public interface RedisOperate {
 	/**
 	 * 获取Hash Long类型的值
 	 * 
-	 * @param key
-	 *            键
-	 * @param field
-	 *            值
+	 * @param key   键
+	 * @param field 值
 	 * @return 解雇偶，没有值则返回0
 	 */
 	<V> Long getHashCount(String key, String field);
@@ -420,8 +347,7 @@ public interface RedisOperate {
 	/**
 	 * 获取hash数据量
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 值
 	 */
 	<V> Long getHashSize(String key);
@@ -429,10 +355,8 @@ public interface RedisOperate {
 	/**
 	 * 获取Long类型的值
 	 * 
-	 * @param key
-	 *            键
-	 * @param hashKeys
-	 *            查询的键
+	 * @param key      键
+	 * @param hashKeys 查询的键
 	 * @return 值，没有则返回0
 	 */
 	<V> List<Long> getHashCount(String key, Collection<String> hashKeys);
@@ -440,10 +364,8 @@ public interface RedisOperate {
 	/**
 	 * 获取值
 	 * 
-	 * @param key
-	 *            键
-	 * @param hashKeys
-	 *            查询键
+	 * @param key      键
+	 * @param hashKeys 查询键
 	 * @return 结果
 	 */
 	<V> List<V> getHash(String key, Collection<String> hashKeys);
@@ -451,12 +373,9 @@ public interface RedisOperate {
 	/**
 	 * 追加delta
 	 * 
-	 * @param key
-	 *            键
-	 * @param field
-	 *            字段
-	 * @param delta
-	 *            追加量
+	 * @param key   键
+	 * @param field 字段
+	 * @param delta 追加量
 	 * @return 追加后结果
 	 */
 	<V> Long addHashCount(String key, String field, long delta);
@@ -464,13 +383,9 @@ public interface RedisOperate {
 	/**
 	 * 追加delta
 	 * 
-	 * @param key
-	 *            键
-	 * @param field
-	 *            字段
-	 * @param delta
-	 *            追加量
-	 * @return 追加后结果
+	 * @param key   键
+	 * @param field 字段
+	 * @param delta 追加量
 	 */
 	<V> void addHashCount(String key, String field, double delta);
 
@@ -662,12 +577,9 @@ public interface RedisOperate {
 	/**
 	 * 添加值到有序set
 	 * 
-	 * @param key
-	 *            键
-	 * @param value
-	 *            值
-	 * @param score
-	 *            权重
+	 * @param key   键
+	 * @param value 值
+	 * @param score 权重
 	 * @return 结果
 	 */
 	boolean addZSet(String key, String value, double score);
@@ -707,8 +619,7 @@ public interface RedisOperate {
 	/**
 	 * 获取值
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 值
 	 */
 	<V> Set<V> getZSet(String key);
@@ -716,12 +627,9 @@ public interface RedisOperate {
 	/**
 	 * 获取反转的值
 	 * 
-	 * @param key
-	 *            键
-	 * @param start
-	 *            开始
-	 * @param end
-	 *            结束
+	 * @param key   键
+	 * @param start 开始
+	 * @param end   结束
 	 * @return 结果
 	 */
 	<V> Set<V> getZSetS(String key, int start, int end);
@@ -729,8 +637,7 @@ public interface RedisOperate {
 	/**
 	 * 获取反转的值
 	 * 
-	 * @param key
-	 *            键
+	 * @param key 键
 	 * @return 值
 	 */
 	Set<String> getZSetS(String key);
@@ -738,12 +645,9 @@ public interface RedisOperate {
 	/**
 	 * 获取值
 	 * 
-	 * @param key
-	 *            键
-	 * @param start
-	 *            开始
-	 * @param end
-	 *            结束
+	 * @param key   键
+	 * @param start 开始
+	 * @param end   结束
 	 * @return 值
 	 */
 	<V> Set<V> getZSet(String key, int start, int end);
@@ -769,12 +673,9 @@ public interface RedisOperate {
 	/**
 	 * 追加权重
 	 * 
-	 * @param key
-	 *            键
-	 * @param value
-	 *            值
-	 * @param delta
-	 *            权重
+	 * @param key   键
+	 * @param value 值
+	 * @param delta 权重
 	 * @return 结果
 	 */
 	double addZSetScore(String key, String value, double delta);

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
@@ -28,7 +29,14 @@ import com.yhert.project.common.util.source.SourceUtils;
 /**
  * 通过数据库构建Javabean
  * 
- * @author Ricardo Li 2017年6月16日 下午2:36:55
+ * <p>
+ * 数据库表备注：|@description{[(..)]}定义描述信息
+ * </p>
+ * <p>
+ * 数据库字段：|@example{[(...)]}定义示例
+ * </p>
+ * 
+ * @author RicardoLi 2017年6月16日 下午2:36:55
  *
  */
 public class BuildJavaBeanByDb {
@@ -69,7 +77,8 @@ public class BuildJavaBeanByDb {
 		}
 	}
 
-	private static void buildTmpl(DbExecution dbExecution, String tableName, String tableComment, Configuration conf) throws Exception {
+	private static void buildTmpl(DbExecution dbExecution, String tableName, String tableComment, Configuration conf)
+			throws Exception {
 		tableComment = tableComment == null ? tableName : tableComment;
 		System.out.println("开始构建[" + tableComment + "(" + tableName + ")]数据");
 		Param param = Param.getParam();
@@ -85,7 +94,12 @@ public class BuildJavaBeanByDb {
 		param.put("cname", cname);
 		String javaname = cname.substring(0, 1).toUpperCase() + cname.substring(1);
 		param.put("javaname", javaname);
-		param.put("tableComment", tableComment);
+		Map<String, String> bmap = BuildDbUtils.analysisStringByTmp(tableComment);
+		String tc = bmap.get("@@");
+		param.put("tableComment", tc);
+		bmap.put("@description", StringUtils.isEmpty(bmap.get("@description")) ? tc : bmap.get("@description"));
+		bmap.remove("@@");
+		param.putAll(bmap);
 		String spackage = tableName.split("_")[0];
 		param.put("spackage", spackage);
 		String packagepath = conf.getString("param.package");
@@ -133,13 +147,15 @@ public class BuildJavaBeanByDb {
 				boolean run = false;
 				if (pk) {
 					if (pks.size() <= 0) {
-						System.out.println("表[" + tableComment + "(" + tableName + ")]无主键，不自动创建" + name + "，请确定表结构是否存在异常");
+						System.out.println(
+								"表[" + tableComment + "(" + tableName + ")]无主键，不自动创建" + name + "，请确定表结构是否存在异常");
 					} else if (pks.size() > 1) {
 						System.out.println("表[" + tableComment + "(" + tableName + ")]有多个主键，不自动创建" + name);
 					} else {
 						MyColumn pkColumn = pks.get(0);
 						if (!String.class.equals(pkColumn.getType())) {
-							System.out.println("表[" + tableComment + "(" + tableName + ")]的主键不为String类型，不自动创建" + name + "");
+							System.out.println(
+									"表[" + tableComment + "(" + tableName + ")]的主键不为String类型，不自动创建" + name + "");
 						} else {
 							param.put("pk", pkColumn);
 							run = true;
@@ -162,7 +178,9 @@ public class BuildJavaBeanByDb {
 		System.out.println("构建[" + tableComment + "(" + tableName + ")]完成");
 	}
 
-	private static List<MyColumn> dealColumn(DbExecution dbExecution, String tableName, String tableComment, Param param) throws SQLException {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private static List<MyColumn> dealColumn(DbExecution dbExecution, String tableName, String tableComment,
+			Param param) throws SQLException {
 		Connection connection = basicDataSource.getConnection();
 		Table table = DBUtils.getDbOperate(dbExecution).getColumn(tableName).get(0);
 		if (table.getType() == 2) {
@@ -173,7 +191,12 @@ public class BuildJavaBeanByDb {
 			param.put("schema", table.getSchema());
 		}
 		if (!StringUtils.isEmpty(StringUtils.trim(table.getRemake()))) {
-			param.put("tableComment", StringUtils.trim(table.getRemake()));
+			Map<String, String> bmap = BuildDbUtils.analysisStringByTmp(StringUtils.trim(table.getRemake()));
+			String tc = bmap.get("@@");
+			param.put("tableComment", tc);
+			bmap.put("@description", StringUtils.isEmpty(bmap.get("@description")) ? tc : bmap.get("@description"));
+			bmap.remove("@@");
+			param.putAll(bmap);
 		}
 		List<Column> columns = table.getColumns();
 		connection.close();
@@ -207,7 +230,19 @@ public class BuildJavaBeanByDb {
 		}
 		param.put("hasDate", hasDate);
 		param.put("hasBigDecimal", hasBigDecimal);
-		param.put("columns", tcolumns);
+		List<Map<String, Object>> cols = new ArrayList<>();
+		for (MyColumn myColumn : tcolumns) {
+			Map map = BeanUtils.copyObject(myColumn, Map.class);
+			Map<String, String> bmap = BuildDbUtils.analysisStringByTmp(myColumn.getRemarks());
+			String tc = bmap.get("@@");
+			myColumn.setRemarks(tc);
+			map.put("remarks", tc);
+			bmap.put("@example", StringUtils.isEmpty(bmap.get("@example")) ? "" : bmap.get("@example"));
+			bmap.remove("@@");
+			map.putAll(bmap);
+			cols.add(map);
+		}
+		param.put("columns", cols);
 		List<MyColumn> pks = new ArrayList<>();
 		for (MyColumn column : tcolumns) {
 			if (column.isPk()) {

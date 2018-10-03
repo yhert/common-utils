@@ -40,8 +40,7 @@ public class DBUtils {
 	/**
 	 * 获得表名称数据库
 	 * 
-	 * @param type
-	 *            类名
+	 * @param type 类名
 	 * @return 表名称
 	 */
 	public static String getTableName(Class<?> type) {
@@ -64,8 +63,7 @@ public class DBUtils {
 	/**
 	 * 获得实体名称
 	 * 
-	 * @param type
-	 *            类型
+	 * @param type 类型
 	 * @return 结果
 	 */
 	public static Class<?> getEntryType(Class<?> type) {
@@ -93,8 +91,7 @@ public class DBUtils {
 	/**
 	 * 获得实体名称
 	 * 
-	 * @param type
-	 *            类型
+	 * @param type 类型
 	 * @return 结果
 	 */
 	public static String getEntryName(Class<?> type) {
@@ -104,8 +101,7 @@ public class DBUtils {
 	/**
 	 * 获得数据库类型
 	 * 
-	 * @param dbExecution
-	 *            数据库执行器
+	 * @param dbExecution 数据库执行器
 	 * @return 数据库类型
 	 */
 	public static String getDbType(DbExecution dbExecution) {
@@ -120,8 +116,7 @@ public class DBUtils {
 	/**
 	 * 关闭链接
 	 * 
-	 * @param connection
-	 *            链接
+	 * @param connection 链接
 	 */
 	public static void close(Connection connection) {
 		close(connection, null, null);
@@ -130,12 +125,9 @@ public class DBUtils {
 	/**
 	 * 关闭链接
 	 * 
-	 * @param connection
-	 *            链接
-	 * @param ps
-	 *            参数
-	 * @param rs
-	 *            结果
+	 * @param connection 链接
+	 * @param ps         参数
+	 * @param rs         结果
 	 */
 	public static void close(Connection connection, PreparedStatement ps, ResultSet rs) {
 		if (rs != null) {
@@ -164,10 +156,8 @@ public class DBUtils {
 	/**
 	 * 转换器
 	 * 
-	 * @param param
-	 *            参数
-	 * @param types
-	 *            类型模板
+	 * @param param 参数
+	 * @param types 类型模板
 	 * @return 结果
 	 */
 	public static Param switchParam(Map<String, String> param, Class<?>[] types) {
@@ -186,7 +176,7 @@ public class DBUtils {
 			String value = entry.getValue();
 			Class<?> type = name2Type.get(key);
 			if (type != null) {
-				Object valObj = BeanUtils.stringToType(value, type);
+				Object valObj = BeanUtils.switchType(value, type);
 				if (valObj == null) {
 					result.put(key, value);
 				} else {
@@ -235,7 +225,7 @@ public class DBUtils {
 							type = Array.newInstance(type, 0).getClass();
 						}
 					}
-					Object valObj = BeanUtils.stringToType(value, type);
+					Object valObj = BeanUtils.switchType(value, type);
 					result.put(key, valObj);
 				}
 			}
@@ -246,14 +236,8 @@ public class DBUtils {
 	/**
 	 * 获得数据库元信息操作（使用完成后记得关闭数据库连接）
 	 * 
-	 * @param dbExecution
-	 *            执行对象
+	 * @param dbExecution 执行对象
 	 * @return 元数据信息
-	 */
-	/**
-	 * 
-	 * @param dbExecution
-	 * @return
 	 */
 	public static DbMetadataMessage getDbOperate(DbExecution dbExecution) {
 		if (!AUTO_SELECT_METADATA_SOURCE) {
@@ -276,8 +260,7 @@ public class DBUtils {
 	/**
 	 * 处理表名称
 	 * 
-	 * @param tableName
-	 *            表名称
+	 * @param tableName 表名称
 	 * @return 名称
 	 */
 	public static String[] dealTableName(String tableName) {
@@ -315,12 +298,9 @@ public class DBUtils {
 	/**
 	 * 设置参数
 	 * 
-	 * @param value
-	 *            值
-	 * @param nsql
-	 *            拼接的SQL
-	 * @param sql
-	 *            sql
+	 * @param value 值
+	 * @param nsql  拼接的SQL
+	 * @param sql   sql
 	 */
 	public static void setParameter(Object value, String nsql, StringBuilder sql) {
 		if (!CommonFunUtils.isNe(value)) {
@@ -332,14 +312,10 @@ public class DBUtils {
 	/**
 	 * 设置参数
 	 * 
-	 * @param param
-	 *            map对象
-	 * @param key
-	 *            键
-	 * @param nsql
-	 *            拼接的SQL
-	 * @param sql
-	 *            sql
+	 * @param param map对象
+	 * @param key   键
+	 * @param nsql  拼接的SQL
+	 * @param sql   sql
 	 */
 	@SuppressWarnings("rawtypes")
 	public static void setParameter(Map param, String key, String nsql, StringBuilder sql) {

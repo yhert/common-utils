@@ -13,17 +13,17 @@ import com.yhert.project.common.excp.CodingException;
  *
  */
 public class EncodeUtils {
-	public static char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '_', '@' };
+	public static char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
+			'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b',
+			'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
+			'x', 'y', 'z', '_', '@' };
 
 	/**
 	 * 进制装换（只能在2的指数倍数进行转换，例如:2,8,16,32,64）
 	 * 
-	 * @param hex
-	 *            原数据
-	 * @param srcW
-	 *            原数据进制位数，例如，2进制则输入1,4进制输入2,8进制输入3,16进制输入4。依次类推
-	 * @param targetH
-	 *            目标进制位数，例如，2进制则输入1,4进制输入2,8进制输入3,16进制输入4。依次类推
+	 * @param hex     原数据
+	 * @param srcW    原数据进制位数，例如，2进制则输入1,4进制输入2,8进制输入3,16进制输入4。依次类推
+	 * @param targetW 目标进制位数，例如，2进制则输入1,4进制输入2,8进制输入3,16进制输入4。依次类推
 	 * @return 转换后数据
 	 */
 	public static String hexConversion(String hex, int srcW, int targetW) {
@@ -73,8 +73,7 @@ public class EncodeUtils {
 	/**
 	 * 32进制字符串转16进制
 	 * 
-	 * @param hex
-	 *            进制
+	 * @param hex 进制
 	 * @return 结果
 	 */
 	public static String switch32to16(String hex) {
@@ -84,8 +83,7 @@ public class EncodeUtils {
 	/**
 	 * 16进制字符串转32进制
 	 * 
-	 * @param hex
-	 *            进制
+	 * @param hex 进制
 	 * @return 结果
 	 */
 	public static String switch16to32(String hex) {
@@ -95,8 +93,7 @@ public class EncodeUtils {
 	/**
 	 * 16进制字符串转64进制
 	 * 
-	 * @param hex
-	 *            进制
+	 * @param hex 进制
 	 * @return 结果
 	 */
 	public static String switch16to64(String hex) {
@@ -106,8 +103,7 @@ public class EncodeUtils {
 	/**
 	 * 64进制字符串转16进制
 	 * 
-	 * @param hex
-	 *            进制
+	 * @param hex 进制
 	 * @return 结果
 	 */
 	public static String switch64to16(String hex) {
@@ -117,8 +113,7 @@ public class EncodeUtils {
 	/**
 	 * char转int
 	 * 
-	 * @param a
-	 *            数据
+	 * @param a 数据
 	 * @return 目标
 	 */
 	private static int char2int(char a) {
@@ -140,8 +135,7 @@ public class EncodeUtils {
 	/**
 	 * int转char
 	 * 
-	 * @param a
-	 *            数据
+	 * @param a 数据
 	 * @return 目标
 	 */
 	private static char int2char(int a) {
@@ -151,8 +145,7 @@ public class EncodeUtils {
 	/**
 	 * base64编码
 	 * 
-	 * @param data
-	 *            数据
+	 * @param data 数据
 	 * @return 结果
 	 */
 	public static String base64Encode(String data) {
@@ -166,8 +159,7 @@ public class EncodeUtils {
 	/**
 	 * base64解码
 	 * 
-	 * @param data
-	 *            数据
+	 * @param data 数据
 	 * @return 结果
 	 */
 	public static String base64Decode(String data) {
@@ -181,8 +173,7 @@ public class EncodeUtils {
 	/**
 	 * 进行url编码
 	 * 
-	 * @param data
-	 *            数据
+	 * @param data 数据
 	 * @return 结果
 	 */
 	public static String urlEncode(String data) {
@@ -196,8 +187,7 @@ public class EncodeUtils {
 	/**
 	 * 进行url解码
 	 * 
-	 * @param data
-	 *            数据
+	 * @param data 数据
 	 * @return 结果
 	 */
 	public static String urlDecoder(String data) {

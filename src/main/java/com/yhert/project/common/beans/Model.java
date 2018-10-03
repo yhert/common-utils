@@ -7,12 +7,15 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * Model类，自动重写ToString，hashCode，equals方法
  * 
  * @author Ricardo Li 2018年4月20日 上午11:30:45
  *
  */
+@ApiModel(value = "数据封装", description = "公共方法封装包")
 public class Model implements Serializable {
 	/**
 	 * 

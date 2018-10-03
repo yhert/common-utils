@@ -20,7 +20,7 @@ public interface BaseService<E> {
 	 * @return 受影响数目
 	 */
 	int insert(List<E> objs);
-	
+
 	/**
 	 * 插入对象
 	 * 
@@ -87,7 +87,7 @@ public interface BaseService<E> {
 	 * @return 结果
 	 */
 	E queryOne(Object whereObj);
-	
+
 	/**
 	 * 通过参数直接查询相关数据
 	 * 
@@ -104,7 +104,18 @@ public interface BaseService<E> {
 	 *            主键
 	 * @return 结果
 	 */
-	E get(Object pk);
+	E get(E pk);
+
+	/**
+	 * 通过主键查询数据
+	 * 
+	 * @param pk
+	 *            主键
+	 * @return 结果
+	 */
+	@SuppressWarnings("rawtypes")
+	E get(Map pk);
+
 	/**
 	 * 查询功能
 	 * 
@@ -113,6 +124,7 @@ public interface BaseService<E> {
 	 * @return 查詢結果
 	 */
 	Result<E> query(Object whereObj);
+
 	/**
 	 * 查询功能
 	 * 
@@ -121,6 +133,7 @@ public interface BaseService<E> {
 	 * @return 查詢結果
 	 */
 	Result<E> query(Map<?, ?> whereParam);
+
 	/**
 	 * 查询数据，并进行分页
 	 * 

@@ -3,14 +3,13 @@ package com.yhert.project.common.util.test;
 import org.junit.Assert;
 import org.junit.Test;
 
-
 /**
  * 测试字符串工具
  * 
  * @author Ricardo Li 2017年3月22日 下午8:15:48
  *
  */
-public class StringUtils {
+public class StringUtilsTest {
 	@Test
 	public void underscoreNameAndCamelName() throws Exception {
 		String c = "aceAce";
